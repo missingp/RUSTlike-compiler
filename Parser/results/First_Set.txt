@@ -1,0 +1,62 @@
+return: first set: {return }
+if: first set: {if }
+else: first set: {else }
+while: first set: {while }
+void: first set: {void }
+int: first set: {int }
+<ID>: first set: {<ID> }
+<INT>: first set: {<INT> }
+<FLOAT>: first set: {<FLOAT> }
+;: first set: {; }
+,: first set: {, }
+(: first set: {( }
+): first set: {) }
+{: first set: {{ }
+}: first set: {} }
++: first set: {+ }
+-: first set: {- }
+*: first set: {* }
+/: first set: {/ }
+=: first set: {= }
+>: first set: {> }
+<: first set: {< }
+>=: first set: {>= }
+<=: first set: {<= }
+!=: first set: {!= }
+==: first set: {== }
+:: first set: {: }
+?: first set: {? }
+#: first set: {# }
+S: first set: {@ void int }
+Program: first set: {@ void int }
+ExtDefList: first set: {@ void int }
+ExtDef: first set: {void int }
+VarSpecifier: first set: {int }
+FunSpecifier: first set: {void int }
+FunDec: first set: {<ID> }
+Block: first set: {{ }
+AssignStmt: first set: {<ID> }
+float: first set: {}
+CreateFunTable_m: first set: {@ }
+VarList: first set: {@ int }
+ParamDec: first set: {int }
+List: first set: {@ return if while int <ID> }
+Def: first set: {int }
+Stmt: first set: {return if while <ID> }
+ReturnStmt: first set: {return }
+IfStmt: first set: {if }
+WhileStmt: first set: {while }
+CallStmt: first set: {<ID> }
+Exp: first set: {<ID> <INT> <FLOAT> ( }
+AddSubExp: first set: {<ID> <INT> <FLOAT> ( }
+Relop: first set: {> < >= <= != == }
+Item: first set: {<ID> <INT> <FLOAT> ( }
+Factor: first set: {<ID> <INT> <FLOAT> ( }
+CallFunCheck: first set: {@ }
+Args: first set: {@ <ID> <INT> <FLOAT> ( }
+IfStmt_m1: first set: {@ }
+IfStmt_m2: first set: {@ }
+IfNext: first set: {@ else }
+IfStmt_next: first set: {@ }
+WhileStmt_m1: first set: {@ }
+WhileStmt_m2: first set: {@ }

@@ -1,0 +1,9 @@
+STEP: 0
+STATUS_STACK:  0
+SYMBOL_STACK: #
+INPUT: let123=1;#
+
+
+语法分析错误:不存在当前的ACTION!
+当前状态: 0
+当前终结符类型: <ID>

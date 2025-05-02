@@ -1,0 +1,70 @@
+@ 终结符
+return if else while void int <ID> <INT> <FLOAT> ; , ( ) { } + - * / = > < >= <= != == : ? # 
+非终结符
+S  Program  ExtDefList  ExtDef  VarSpecifier  FunSpecifier  FunDec  Block  AssignStmt  float  CreateFunTable_m  VarList  ParamDec  List  Def  Stmt  ReturnStmt  IfStmt  WhileStmt  CallStmt  Exp  AddSubExp  Relop  Item  Factor  CallFunCheck  Args  IfStmt_m1  IfStmt_m2  IfNext  IfStmt_next  WhileStmt_m1  WhileStmt_m2  
+语法规则
+production0  S  --->  Program 
+production1  Program  --->  ExtDefList 
+production2  ExtDefList  --->  ExtDef ExtDefList 
+production3  ExtDefList  --->  @ 
+production4  ExtDef  --->  VarSpecifier <ID> ; 
+production5  ExtDef  --->  FunSpecifier FunDec Block 
+production6  ExtDef  --->  VarSpecifier AssignStmt 
+production7  VarSpecifier  --->  int 
+production8  VarSpecifier  --->  float 
+production9  FunSpecifier  --->  void 
+production10  FunSpecifier  --->  int 
+production11  FunSpecifier  --->  float 
+production12  FunDec  --->  <ID> CreateFunTable_m ( VarList ) 
+production13  CreateFunTable_m  --->  @ 
+production14  VarList  --->  ParamDec , VarList 
+production15  VarList  --->  ParamDec 
+production16  VarList  --->  @ 
+production17  ParamDec  --->  VarSpecifier <ID> 
+production18  List  --->  Def List 
+production19  List  --->  Stmt List 
+production20  List  --->  @ 
+production21  Block  --->  { List } 
+production22  Def  --->  VarSpecifier <ID> ; 
+production23  Stmt  --->  AssignStmt ; 
+production24  Stmt  --->  ReturnStmt ; 
+production25  Stmt  --->  IfStmt 
+production26  Stmt  --->  WhileStmt 
+production27  Stmt  --->  CallStmt ; 
+production28  AssignStmt  --->  <ID> = Exp 
+production29  Exp  --->  AddSubExp 
+production30  Exp  --->  Exp Relop AddSubExp 
+production31  Exp  --->  Exp ? Exp : Exp 
+production32  AddSubExp  --->  Item 
+production33  AddSubExp  --->  Item + Item 
+production34  AddSubExp  --->  Item - Item 
+production35  Item  --->  Factor 
+production36  Item  --->  Factor * Factor 
+production37  Item  --->  Factor / Factor 
+production38  Factor  --->  <INT> 
+production39  Factor  --->  <FLOAT> 
+production40  Factor  --->  ( Exp ) 
+production41  Factor  --->  <ID> 
+production42  Factor  --->  CallStmt 
+production43  CallStmt  --->  <ID> ( CallFunCheck Args ) 
+production44  CallFunCheck  --->  @ 
+production45  Args  --->  Exp , Args 
+production46  Args  --->  Exp 
+production47  Args  --->  @ 
+production48  ReturnStmt  --->  return Exp 
+production49  ReturnStmt  --->  return 
+production50  Relop  --->  > 
+production51  Relop  --->  < 
+production52  Relop  --->  >= 
+production53  Relop  --->  <= 
+production54  Relop  --->  == 
+production55  Relop  --->  != 
+production56  IfStmt  --->  if IfStmt_m1 ( Exp ) IfStmt_m2 Block IfNext 
+production57  IfStmt_m1  --->  @ 
+production58  IfStmt_m2  --->  @ 
+production59  IfNext  --->  @ 
+production60  IfNext  --->  IfStmt_next else Block 
+production61  IfStmt_next  --->  @ 
+production62  WhileStmt  --->  while WhileStmt_m1 ( Exp ) WhileStmt_m2 Block 
+production63  WhileStmt_m1  --->  @ 
+production64  WhileStmt_m2  --->  @ 
