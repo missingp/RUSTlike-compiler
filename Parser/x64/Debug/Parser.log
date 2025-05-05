@@ -1,17 +1,4 @@
 ﻿   Qt/MSBuild: 3.3.1.1
-   Qt: 6.6.3
-  Lexer.cpp
-F:\.Light-Compiler-based-on-LR1-method-master\Parser\Lexer.cpp(54,72): warning C4819: 该文件包含不能在当前代码页(0)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-F:\.Light-Compiler-based-on-LR1-method-master\Parser\Lexer.cpp(567,69): warning C4819: 该文件包含不能在当前代码页(0)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-F:\.Light-Compiler-based-on-LR1-method-master\Parser\Lexer.cpp(572,69): warning C4819: 该文件包含不能在当前代码页(0)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-F:\.Light-Compiler-based-on-LR1-method-master\Parser\Lexer.cpp(582,69): warning C4819: 该文件包含不能在当前代码页(0)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-F:\.Light-Compiler-based-on-LR1-method-master\Parser\Lexer.cpp(587,71): warning C4819: 该文件包含不能在当前代码页(0)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-F:\.Light-Compiler-based-on-LR1-method-master\Parser\Lexer.cpp(592,71): warning C4819: 该文件包含不能在当前代码页(0)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-F:\.Light-Compiler-based-on-LR1-method-master\Parser\Lexer.cpp(608,69): warning C4819: 该文件包含不能在当前代码页(0)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-F:\.Light-Compiler-based-on-LR1-method-master\Parser\Lexer.cpp(612,69): warning C4819: 该文件包含不能在当前代码页(0)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-F:\.Light-Compiler-based-on-LR1-method-master\Parser\Lexer.cpp(616,69): warning C4819: 该文件包含不能在当前代码页(0)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-F:\.Light-Compiler-based-on-LR1-method-master\Parser\Lexer.cpp(628,69): warning C4819: 该文件包含不能在当前代码页(0)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-F:\.Light-Compiler-based-on-LR1-method-master\Parser\Lexer.cpp(660,71): warning C4819: 该文件包含不能在当前代码页(0)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-F:\.Light-Compiler-based-on-LR1-method-master\Parser\Lexer.cpp(664,69): warning C4819: 该文件包含不能在当前代码页(0)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-F:\.Light-Compiler-based-on-LR1-method-master\Parser\Lexer.cpp(677,86): warning C4819: 该文件包含不能在当前代码页(0)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-  Parser.vcxproj -> F:\.Light-Compiler-based-on-LR1-method-master\x64\Debug\Parser.exe
+   Qt: 6.9.0
+  grammar.cpp
+  Parser.vcxproj -> D:\course\proj_compile\middle\RUSTlike-compiler\x64\Debug\Parser.exe

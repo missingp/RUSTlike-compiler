@@ -1,62 +1,61 @@
+fn: first set: {fn }
+let: first set: {let }
+mut: first set: {mut }
 return: first set: {return }
 if: first set: {if }
 else: first set: {else }
 while: first set: {while }
-void: first set: {void }
-int: first set: {int }
-<ID>: first set: {<ID> }
-<INT>: first set: {<INT> }
-<FLOAT>: first set: {<FLOAT> }
-;: first set: {; }
-,: first set: {, }
-(: first set: {( }
-): first set: {) }
-{: first set: {{ }
-}: first set: {} }
+for: first set: {for }
+in: first set: {in }
+loop: first set: {loop }
+break: first set: {break }
+continue: first set: {continue }
+=: first set: {= }
 +: first set: {+ }
 -: first set: {- }
 *: first set: {* }
 /: first set: {/ }
-=: first set: {= }
->: first set: {> }
-<: first set: {< }
->=: first set: {>= }
-<=: first set: {<= }
-!=: first set: {!= }
 ==: first set: {== }
+!=: first set: {!= }
+<: first set: {< }
+>: first set: {> }
+<=: first set: {<= }
+>=: first set: {>= }
+.: first set: {. }
+(: first set: {( }
+): first set: {) }
+{: first set: {{ }
+}: first set: {} }
+[: first set: {[ }
+]: first set: {] }
+;: first set: {; }
+,: first set: {, }
 :: first set: {: }
-?: first set: {? }
+->: first set: {-> }
+..: first set: {.. }
+<ID>: first set: {<ID> }
+i32: first set: {i32 }
+<NUM>: first set: {<NUM> }
+<INT>: first set: {<INT> }
 #: first set: {# }
-S: first set: {@ void int }
-Program: first set: {@ void int }
-ExtDefList: first set: {@ void int }
-ExtDef: first set: {void int }
-VarSpecifier: first set: {int }
-FunSpecifier: first set: {void int }
-FunDec: first set: {<ID> }
+S: first set: {@ fn }
+Program: first set: {@ fn }
+DeclList: first set: {@ fn }
+VarDeclInner: first set: {mut }
+Type: first set: {i32 }
+Assignable: first set: {<ID> }
+Decl: first set: {fn }
+FunDef: first set: {fn }
+FunHead: first set: {fn }
 Block: first set: {{ }
-AssignStmt: first set: {<ID> }
-float: first set: {}
-CreateFunTable_m: first set: {@ }
-VarList: first set: {@ int }
-ParamDec: first set: {int }
-List: first set: {@ return if while int <ID> }
-Def: first set: {int }
-Stmt: first set: {return if while <ID> }
+ParamList: first set: {@ mut }
+StmtList: first set: {@ return ( ; <ID> <INT> }
+Stmt: first set: {return ( ; <ID> <INT> }
 ReturnStmt: first set: {return }
-IfStmt: first set: {if }
-WhileStmt: first set: {while }
-CallStmt: first set: {<ID> }
-Exp: first set: {<ID> <INT> <FLOAT> ( }
-AddSubExp: first set: {<ID> <INT> <FLOAT> ( }
-Relop: first set: {> < >= <= != == }
-Item: first set: {<ID> <INT> <FLOAT> ( }
-Factor: first set: {<ID> <INT> <FLOAT> ( }
-CallFunCheck: first set: {@ }
-Args: first set: {@ <ID> <INT> <FLOAT> ( }
-IfStmt_m1: first set: {@ }
-IfStmt_m2: first set: {@ }
-IfNext: first set: {@ else }
-IfStmt_next: first set: {@ }
-WhileStmt_m1: first set: {@ }
-WhileStmt_m2: first set: {@ }
+Param: first set: {mut }
+VarMut: first set: {mut }
+Exp: first set: {( <ID> <INT> }
+AddSubExp: first set: {( <ID> <INT> }
+Item: first set: {( <ID> <INT> }
+Factor: first set: {( <ID> <INT> }
+Element: first set: {( <ID> <INT> }

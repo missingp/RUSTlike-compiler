@@ -1,9 +1,497 @@
 STEP: 0
 STATUS_STACK:  0
 SYMBOL_STACK: #
-INPUT: let123=1;#
+INPUT: fnprogram_1_2(){;;;;;;}fnprogram_1_3(){return;}fnprogram_1_4(muta:i32){}fnprogram_1_5()->i32{return1;}#
+
+STEP: 1
+STATUS_STACK:  0 1
+STATUS_SYMBOL: #fn
+INPUT: <ID>(){;;;;;;}fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 2
+STATUS_STACK:  0 1 7
+STATUS_SYMBOL: #fn<ID>
+INPUT: (){;;;;;;}fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 3
+STATUS_STACK:  0 1 7 11
+STATUS_SYMBOL: #fn<ID>(
+INPUT: ){;;;;;;}fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 4
+STATUS_STACK:  0 1 7 11 26
+STATUS_SYMBOL: #fn<ID>(ParamList
+INPUT: ){;;;;;;}fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 5
+STATUS_STACK:  0 1 7 11 26 44
+STATUS_SYMBOL: #fn<ID>(ParamList)
+INPUT: {;;;;;;}fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 6
+STATUS_STACK:  0 6
+STATUS_SYMBOL: #FunHead
+INPUT: {;;;;;;}fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 7
+STATUS_STACK:  0 6 10
+STATUS_SYMBOL: #FunHead{
+INPUT: ;;;;;;}fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 8
+STATUS_STACK:  0 6 10 15
+STATUS_SYMBOL: #FunHead{;
+INPUT: ;;;;;}fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 9
+STATUS_STACK:  0 6 10 14
+STATUS_SYMBOL: #FunHead{Stmt
+INPUT: ;;;;;}fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 10
+STATUS_STACK:  0 6 10 14 15
+STATUS_SYMBOL: #FunHead{Stmt;
+INPUT: ;;;;}fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 11
+STATUS_STACK:  0 6 10 14 14
+STATUS_SYMBOL: #FunHead{StmtStmt
+INPUT: ;;;;}fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 12
+STATUS_STACK:  0 6 10 14 14 15
+STATUS_SYMBOL: #FunHead{StmtStmt;
+INPUT: ;;;}fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 13
+STATUS_STACK:  0 6 10 14 14 14
+STATUS_SYMBOL: #FunHead{StmtStmtStmt
+INPUT: ;;;}fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 14
+STATUS_STACK:  0 6 10 14 14 14 15
+STATUS_SYMBOL: #FunHead{StmtStmtStmt;
+INPUT: ;;}fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 15
+STATUS_STACK:  0 6 10 14 14 14 14
+STATUS_SYMBOL: #FunHead{StmtStmtStmtStmt
+INPUT: ;;}fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 16
+STATUS_STACK:  0 6 10 14 14 14 14 15
+STATUS_SYMBOL: #FunHead{StmtStmtStmtStmt;
+INPUT: ;}fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 17
+STATUS_STACK:  0 6 10 14 14 14 14 14
+STATUS_SYMBOL: #FunHead{StmtStmtStmtStmtStmt
+INPUT: ;}fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 18
+STATUS_STACK:  0 6 10 14 14 14 14 14 15
+STATUS_SYMBOL: #FunHead{StmtStmtStmtStmtStmt;
+INPUT: }fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 19
+STATUS_STACK:  0 6 10 14 14 14 14 14 14
+STATUS_SYMBOL: #FunHead{StmtStmtStmtStmtStmtStmt
+INPUT: }fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 20
+STATUS_STACK:  0 6 10 14 14 14 14 14 14 33
+STATUS_SYMBOL: #FunHead{StmtStmtStmtStmtStmtStmtStmtList
+INPUT: }fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 21
+STATUS_STACK:  0 6 10 14 14 14 14 14 33
+STATUS_SYMBOL: #FunHead{StmtStmtStmtStmtStmtStmtList
+INPUT: }fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 22
+STATUS_STACK:  0 6 10 14 14 14 14 33
+STATUS_SYMBOL: #FunHead{StmtStmtStmtStmtStmtList
+INPUT: }fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 23
+STATUS_STACK:  0 6 10 14 14 14 33
+STATUS_SYMBOL: #FunHead{StmtStmtStmtStmtList
+INPUT: }fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 24
+STATUS_STACK:  0 6 10 14 14 33
+STATUS_SYMBOL: #FunHead{StmtStmtStmtList
+INPUT: }fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 25
+STATUS_STACK:  0 6 10 14 33
+STATUS_SYMBOL: #FunHead{StmtStmtList
+INPUT: }fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 26
+STATUS_STACK:  0 6 10 12
+STATUS_SYMBOL: #FunHead{StmtList
+INPUT: }fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 27
+STATUS_STACK:  0 6 10 12 30
+STATUS_SYMBOL: #FunHead{StmtList}
+INPUT: fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 28
+STATUS_STACK:  0 6 9
+STATUS_SYMBOL: #FunHeadBlock
+INPUT: fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 29
+STATUS_STACK:  0 5
+STATUS_SYMBOL: #FunDef
+INPUT: fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 30
+STATUS_STACK:  0 4
+STATUS_SYMBOL: #Decl
+INPUT: fn<ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 31
+STATUS_STACK:  0 4 1
+STATUS_SYMBOL: #Declfn
+INPUT: <ID>(){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 32
+STATUS_STACK:  0 4 1 7
+STATUS_SYMBOL: #Declfn<ID>
+INPUT: (){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 33
+STATUS_STACK:  0 4 1 7 11
+STATUS_SYMBOL: #Declfn<ID>(
+INPUT: ){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 34
+STATUS_STACK:  0 4 1 7 11 26
+STATUS_SYMBOL: #Declfn<ID>(ParamList
+INPUT: ){return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 35
+STATUS_STACK:  0 4 1 7 11 26 44
+STATUS_SYMBOL: #Declfn<ID>(ParamList)
+INPUT: {return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 36
+STATUS_STACK:  0 4 6
+STATUS_SYMBOL: #DeclFunHead
+INPUT: {return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 37
+STATUS_STACK:  0 4 6 10
+STATUS_SYMBOL: #DeclFunHead{
+INPUT: return;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 38
+STATUS_STACK:  0 4 6 10 13
+STATUS_SYMBOL: #DeclFunHead{return
+INPUT: ;}fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 39
+STATUS_STACK:  0 4 6 10 13 31
+STATUS_SYMBOL: #DeclFunHead{return;
+INPUT: }fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 40
+STATUS_STACK:  0 4 6 10 16
+STATUS_SYMBOL: #DeclFunHead{ReturnStmt
+INPUT: }fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 41
+STATUS_STACK:  0 4 6 10 14
+STATUS_SYMBOL: #DeclFunHead{Stmt
+INPUT: }fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 42
+STATUS_STACK:  0 4 6 10 14 33
+STATUS_SYMBOL: #DeclFunHead{StmtStmtList
+INPUT: }fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 43
+STATUS_STACK:  0 4 6 10 12
+STATUS_SYMBOL: #DeclFunHead{StmtList
+INPUT: }fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 44
+STATUS_STACK:  0 4 6 10 12 30
+STATUS_SYMBOL: #DeclFunHead{StmtList}
+INPUT: fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 45
+STATUS_STACK:  0 4 6 9
+STATUS_SYMBOL: #DeclFunHeadBlock
+INPUT: fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 46
+STATUS_STACK:  0 4 5
+STATUS_SYMBOL: #DeclFunDef
+INPUT: fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 47
+STATUS_STACK:  0 4 4
+STATUS_SYMBOL: #DeclDecl
+INPUT: fn<ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 48
+STATUS_STACK:  0 4 4 1
+STATUS_SYMBOL: #DeclDeclfn
+INPUT: <ID>(mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 49
+STATUS_STACK:  0 4 4 1 7
+STATUS_SYMBOL: #DeclDeclfn<ID>
+INPUT: (mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 50
+STATUS_STACK:  0 4 4 1 7 11
+STATUS_SYMBOL: #DeclDeclfn<ID>(
+INPUT: mut<ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 51
+STATUS_STACK:  0 4 4 1 7 11 29
+STATUS_SYMBOL: #DeclDeclfn<ID>(mut
+INPUT: <ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 52
+STATUS_STACK:  0 4 4 1 7 11 28
+STATUS_SYMBOL: #DeclDeclfn<ID>(VarMut
+INPUT: <ID>:i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 53
+STATUS_STACK:  0 4 4 1 7 11 28 46
+STATUS_SYMBOL: #DeclDeclfn<ID>(VarMut<ID>
+INPUT: :i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 54
+STATUS_STACK:  0 4 4 1 7 11 28 46 52
+STATUS_SYMBOL: #DeclDeclfn<ID>(VarMut<ID>:
+INPUT: i32){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 55
+STATUS_STACK:  0 4 4 1 7 11 28 46 52 57
+STATUS_SYMBOL: #DeclDeclfn<ID>(VarMut<ID>:i32
+INPUT: ){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 56
+STATUS_STACK:  0 4 4 1 7 11 28 46 52 56
+STATUS_SYMBOL: #DeclDeclfn<ID>(VarMut<ID>:Type
+INPUT: ){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 57
+STATUS_STACK:  0 4 4 1 7 11 27
+STATUS_SYMBOL: #DeclDeclfn<ID>(Param
+INPUT: ){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 58
+STATUS_STACK:  0 4 4 1 7 11 26
+STATUS_SYMBOL: #DeclDeclfn<ID>(ParamList
+INPUT: ){}fn<ID>()->i32{return<INT>;}#
+
+STEP: 59
+STATUS_STACK:  0 4 4 1 7 11 26 44
+STATUS_SYMBOL: #DeclDeclfn<ID>(ParamList)
+INPUT: {}fn<ID>()->i32{return<INT>;}#
+
+STEP: 60
+STATUS_STACK:  0 4 4 6
+STATUS_SYMBOL: #DeclDeclFunHead
+INPUT: {}fn<ID>()->i32{return<INT>;}#
+
+STEP: 61
+STATUS_STACK:  0 4 4 6 10
+STATUS_SYMBOL: #DeclDeclFunHead{
+INPUT: }fn<ID>()->i32{return<INT>;}#
+
+STEP: 62
+STATUS_STACK:  0 4 4 6 10 12
+STATUS_SYMBOL: #DeclDeclFunHead{StmtList
+INPUT: }fn<ID>()->i32{return<INT>;}#
+
+STEP: 63
+STATUS_STACK:  0 4 4 6 10 12 30
+STATUS_SYMBOL: #DeclDeclFunHead{StmtList}
+INPUT: fn<ID>()->i32{return<INT>;}#
+
+STEP: 64
+STATUS_STACK:  0 4 4 6 9
+STATUS_SYMBOL: #DeclDeclFunHeadBlock
+INPUT: fn<ID>()->i32{return<INT>;}#
+
+STEP: 65
+STATUS_STACK:  0 4 4 5
+STATUS_SYMBOL: #DeclDeclFunDef
+INPUT: fn<ID>()->i32{return<INT>;}#
+
+STEP: 66
+STATUS_STACK:  0 4 4 4
+STATUS_SYMBOL: #DeclDeclDecl
+INPUT: fn<ID>()->i32{return<INT>;}#
+
+STEP: 67
+STATUS_STACK:  0 4 4 4 1
+STATUS_SYMBOL: #DeclDeclDeclfn
+INPUT: <ID>()->i32{return<INT>;}#
+
+STEP: 68
+STATUS_STACK:  0 4 4 4 1 7
+STATUS_SYMBOL: #DeclDeclDeclfn<ID>
+INPUT: ()->i32{return<INT>;}#
+
+STEP: 69
+STATUS_STACK:  0 4 4 4 1 7 11
+STATUS_SYMBOL: #DeclDeclDeclfn<ID>(
+INPUT: )->i32{return<INT>;}#
+
+STEP: 70
+STATUS_STACK:  0 4 4 4 1 7 11 26
+STATUS_SYMBOL: #DeclDeclDeclfn<ID>(ParamList
+INPUT: )->i32{return<INT>;}#
+
+STEP: 71
+STATUS_STACK:  0 4 4 4 1 7 11 26 44
+STATUS_SYMBOL: #DeclDeclDeclfn<ID>(ParamList)
+INPUT: ->i32{return<INT>;}#
+
+STEP: 72
+STATUS_STACK:  0 4 4 4 1 7 11 26 44 50
+STATUS_SYMBOL: #DeclDeclDeclfn<ID>(ParamList)->
+INPUT: i32{return<INT>;}#
+
+STEP: 73
+STATUS_STACK:  0 4 4 4 1 7 11 26 44 50 55
+STATUS_SYMBOL: #DeclDeclDeclfn<ID>(ParamList)->i32
+INPUT: {return<INT>;}#
+
+STEP: 74
+STATUS_STACK:  0 4 4 4 1 7 11 26 44 50 54
+STATUS_SYMBOL: #DeclDeclDeclfn<ID>(ParamList)->Type
+INPUT: {return<INT>;}#
+
+STEP: 75
+STATUS_STACK:  0 4 4 4 6
+STATUS_SYMBOL: #DeclDeclDeclFunHead
+INPUT: {return<INT>;}#
+
+STEP: 76
+STATUS_STACK:  0 4 4 4 6 10
+STATUS_SYMBOL: #DeclDeclDeclFunHead{
+INPUT: return<INT>;}#
+
+STEP: 77
+STATUS_STACK:  0 4 4 4 6 10 13
+STATUS_SYMBOL: #DeclDeclDeclFunHead{return
+INPUT: <INT>;}#
+
+STEP: 78
+STATUS_STACK:  0 4 4 4 6 10 13 22
+STATUS_SYMBOL: #DeclDeclDeclFunHead{return<INT>
+INPUT: ;}#
+
+STEP: 79
+STATUS_STACK:  0 4 4 4 6 10 13 21
+STATUS_SYMBOL: #DeclDeclDeclFunHead{returnElement
+INPUT: ;}#
+
+STEP: 80
+STATUS_STACK:  0 4 4 4 6 10 13 20
+STATUS_SYMBOL: #DeclDeclDeclFunHead{returnFactor
+INPUT: ;}#
+
+STEP: 81
+STATUS_STACK:  0 4 4 4 6 10 13 19
+STATUS_SYMBOL: #DeclDeclDeclFunHead{returnItem
+INPUT: ;}#
+
+STEP: 82
+STATUS_STACK:  0 4 4 4 6 10 13 18
+STATUS_SYMBOL: #DeclDeclDeclFunHead{returnAddSubExp
+INPUT: ;}#
+
+STEP: 83
+STATUS_STACK:  0 4 4 4 6 10 13 32
+STATUS_SYMBOL: #DeclDeclDeclFunHead{returnExp
+INPUT: ;}#
+
+STEP: 84
+STATUS_STACK:  0 4 4 4 6 10 13 32 47
+STATUS_SYMBOL: #DeclDeclDeclFunHead{returnExp;
+INPUT: }#
+
+STEP: 85
+STATUS_STACK:  0 4 4 4 6 10 16
+STATUS_SYMBOL: #DeclDeclDeclFunHead{ReturnStmt
+INPUT: }#
+
+STEP: 86
+STATUS_STACK:  0 4 4 4 6 10 14
+STATUS_SYMBOL: #DeclDeclDeclFunHead{Stmt
+INPUT: }#
+
+STEP: 87
+STATUS_STACK:  0 4 4 4 6 10 14 33
+STATUS_SYMBOL: #DeclDeclDeclFunHead{StmtStmtList
+INPUT: }#
+
+STEP: 88
+STATUS_STACK:  0 4 4 4 6 10 12
+STATUS_SYMBOL: #DeclDeclDeclFunHead{StmtList
+INPUT: }#
+
+STEP: 89
+STATUS_STACK:  0 4 4 4 6 10 12 30
+STATUS_SYMBOL: #DeclDeclDeclFunHead{StmtList}
+INPUT: #
+
+STEP: 90
+STATUS_STACK:  0 4 4 4 6 9
+STATUS_SYMBOL: #DeclDeclDeclFunHeadBlock
+INPUT: #
+
+STEP: 91
+STATUS_STACK:  0 4 4 4 5
+STATUS_SYMBOL: #DeclDeclDeclFunDef
+INPUT: #
+
+STEP: 92
+STATUS_STACK:  0 4 4 4 4
+STATUS_SYMBOL: #DeclDeclDeclDecl
+INPUT: #
+
+STEP: 93
+STATUS_STACK:  0 4 4 4 4 8
+STATUS_SYMBOL: #DeclDeclDeclDeclDeclList
+INPUT: #
+
+STEP: 94
+STATUS_STACK:  0 4 4 4 8
+STATUS_SYMBOL: #DeclDeclDeclDeclList
+INPUT: #
+
+STEP: 95
+STATUS_STACK:  0 4 4 8
+STATUS_SYMBOL: #DeclDeclDeclList
+INPUT: #
+
+STEP: 96
+STATUS_STACK:  0 4 8
+STATUS_SYMBOL: #DeclDeclList
+INPUT: #
+
+STEP: 97
+STATUS_STACK:  0 3
+STATUS_SYMBOL: #DeclList
+INPUT: #
+
+STEP: 98
+STATUS_STACK:  0 2
+STATUS_SYMBOL: #Program
+INPUT: #
 
 
-语法分析错误:不存在当前的ACTION!
-当前状态: 0
-当前终结符类型: <ID>
+Parse successfully!

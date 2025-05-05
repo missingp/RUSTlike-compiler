@@ -1,5 +1,5 @@
 ﻿#include "lexer.h"
-#include<qdebug.h>
+#include <qdebug.h>
 
 
 #define SUCCESS 1

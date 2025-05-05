@@ -88,7 +88,8 @@ int grammar::ReadGrammar(const string file_path) {
 		row++;
 		if (production_str.empty())
 			continue;
-		Trimmed(production_str);//注释处理
+		Trimmed(production_str);// 去掉空行
+		//注释处理
 		if (production_str.find("$") != production_str.npos)
 			production_str.erase(production_str.find_first_of("$"));//从$第一次出现的位置 删到结尾
 		if (production_str.empty())

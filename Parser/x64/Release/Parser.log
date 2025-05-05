@@ -1,0 +1,3 @@
+﻿   Qt/MSBuild: 3.3.1.1
+C:\Users\10597\AppData\Local\QtMsBuild\qt_vars.targets(43,5): error : There's no Qt version assigned to project Parser.vcxproj for configuration Release/x64.
+C:\Users\10597\AppData\Local\QtMsBuild\qt_vars.targets(43,5): error : Please set a Qt installation in 'Project|Properties|Configuration Properties|Qt Project Settings|Qt Installation'.
