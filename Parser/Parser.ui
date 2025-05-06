@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Light Compiler Based on LR1 Metod(to be continued)</string>
+   <string>RustLikeCompiler</string>
   </property>
   <property name="windowIcon">
    <iconset resource="Parser.qrc">
@@ -85,7 +85,7 @@ QGroupBox::indicator {
     <property name="title">
      <string>代码</string>
     </property>
-    <widget class="QTextEdit" name="textEdit">
+    <widget class="MyTextEdit" name="textEdit">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -192,7 +192,7 @@ QGroupBox::indicator {
      <x>0</x>
      <y>0</y>
      <width>829</width>
-     <height>35</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -346,6 +346,13 @@ QStatusBar QLabel {
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>MyTextEdit</class>
+   <extends>QTextEdit</extends>
+   <header>mytextedit.hpp</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="Parser.qrc"/>
  </resources>

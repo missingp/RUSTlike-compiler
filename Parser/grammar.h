@@ -37,7 +37,7 @@ typedef enum
     terminal,	   //终结符
     nonterminal,	   //非终结符
     epsilon,       //空
-    end             //结束符
+    final             //结束符
 }symbolType;
 
 

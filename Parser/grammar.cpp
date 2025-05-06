@@ -26,7 +26,7 @@ bool  grammar::checkGrammar(ofstream &ferr)
 {
 	if (symbolIndex(EndToken) == -1)
 	{
-		symbols.push_back(symbol(symbolType::end, EndToken));
+		symbols.push_back(symbol(symbolType::final, EndToken));
 		terminals.insert(symbols.size() - 1);
 	}
 	if (symbolIndex(StartToken) == -1)
