@@ -1,39 +1,130 @@
-$ ����ʽ��ʽΪ A ::= a B | C d ����������֮���ÿո�ֿ�������ʽ�ұ��� | �ָ�
-$ $Ϊע����
-$ @Ϊ�մ���<ID>Ϊ��ʶ����<INT>Ϊ����
-$ ��չ�ķ�����ʼ����ΪS���ķ�����ʼ����ΪProgram
-$ ʹ��%token ::= xx | xx | xx�г����е��ս��
+$ 产生式格式为 A ::= a B | C d ，各个符号之间用空格分开，产生式右边用 | 分割
+$ $为注释行
+$ @为空串，<ID>为标识符，<INT>为整数
+$ 拓展文法的起始符号为S，文法的起始符号为Program
+$ 使用%token ::= xx | xx | xx列出所有的终结符
 
-%token ::= fn | let | mut | return | if | else | while | for | in | loop | break | continue | = | + | - | * | / | == | != | < | > | <= | >= | . | ( | ) | { | } | [ | ] | ; | , | : | -> | .. | <ID> | i32 | <NUM> | <INT>
+%token ::= fn | let | mut | return | if | else | while | for | in | loop | break | continue | = | + | - | * | / | == | != | < | > | <= | >= | . | ( | ) | { | } | [ | ] | ; | , | : | -> | .. | <ID> | i32 | <NUM> | <INT> | &
 
-$ ��չ�ķ�����ʽ
+$ 扩展文法产生式
 S ::= Program
 
-$ ��������Ϊ��������������
-
+$ 整个程序为多个声明串的组合
 Program ::= DeclList
-VarDeclInner ::= mut <ID>
-Type ::= i32
-Assignable ::= <ID>
+
+$ 类型和可赋值元素定义
+Type ::= i32 | [ Type ; <INT> ] | ( TupleTypeInner ) | & mut Type | & Type
+
+$ 无法识别.
+Assignable ::= <ID> | Element [ Exp ] | Factor <INT>
+
+$ 声明列表
 DeclList ::= @ | Decl DeclList
-Decl ::= FunDef
+
+$ 函数定义和变量声明
+Decl ::= FunDef | VarDecl | VarDeclAssign
+
+$ 函数定义
 FunDef ::= FunHead Block
 FunHead ::= fn <ID> ( ParamList )
+FunHead ::= fn <ID> ( ParamList ) -> Type
 ParamList ::= @
-Block ::= { StmtList }
-StmtList ::= Stmt StmtList | @
-Stmt ::= ;
-Stmt ::= ReturnStmt
-ReturnStmt ::= return ;
 ParamList ::= Param | Param , ParamList
 Param ::= VarMut <ID> : Type
-VarMut ::= mut
-Type ::= i32
-FunHead ::= fn <ID> ( ParamList ) -> Type
-ReturnStmt ::= return Exp ;
+VarMut ::= mut | @
+
+$ 语句块和语句列表
+Block ::= { StmtList }
+StmtList ::= Stmt StmtList | @
+
+$ 语句定义
+Stmt ::= ;
+Stmt ::= AssignStmt
+Stmt ::= VarDecl
+Stmt ::= VarDeclAssign
+Stmt ::= ReturnStmt
 Stmt ::= Exp ;
-Exp ::= AddSubExp
-AddSubExp ::= Item
+Stmt ::= IfStmt
+Stmt ::= WhileStmt
+Stmt ::= ForStmt
+Stmt ::= LoopStmt
+Stmt ::= BreakStmt
+Stmt ::= ContinueStmt
+Stmt ::= break Exp ;
+$ 赋值语句
+AssignStmt ::= Assignable = Exp ;
+
+$ 变量声明赋值语句
+VarDeclAssign ::= let VarDeclInner : Type = Exp ;
+VarDeclAssign ::= let VarDeclInner = Exp ;
+VarDeclAssign ::= abc
+
+$ 变量声明
+VarDecl ::= let VarDeclInner ;
+VarDecl ::= let VarDeclInner : Type ;
+VarDeclInner ::= mut <ID> | <ID>
+
+$ 返回语句
+ReturnStmt ::= return ;
+ReturnStmt ::= return Exp ;
+
+$ 表达式相关定义
+Exp ::= AddSubExp | Exp CompOp Exp | Block | IfStmt | LoopStmt | FuncExpStmtBlock  | SelectExp
+AddSubExp ::= AddSubExp AddSubOp MulDivExp | MulDivExp
+MulDivExp ::= MulDivExp MulDivOp Item | Item
 Item ::= Factor
-Factor ::= Element
-Element ::= <INT> | Assignable | ( Exp )
+Factor ::= Element | * Factor | & mut Factor | & Factor | [ ArrayElementList ] | ( TupleAssignInner )
+Element ::= <INT> | Assignable | ( Exp ) | <ID> ( ArgList ) | <ID>
+ArrayElementList ::= @ | Exp | ArrayElement , ArrayElementList
+ArrayElement ::= Exp
+
+$ 新增运算符规则
+CompOp ::= < | <= | > | >= | == | !=
+AddSubOp ::= + | -
+MulDivOp ::= * | /
+
+$ 新增实参列表规则
+ArgList ::= @ | Exp | Exp , ArgList
+
+$ 新增选择结构规则
+IfStmt ::= if Exp Block ElsePart
+ElsePart ::= @ | else Block | else if Exp Block ElsePart 
+
+$ 新增循环结构规则
+WhileStmt ::= while Exp Block
+ForStmt ::= for VarDeclInner in Iterable Block
+
+$此处有问题，识别不了..后序再改
+Iterable ::= Exp .. Exp
+
+LoopStmt ::= loop Block
+
+$ break 语句定义
+BreakStmt ::= break ;
+
+$ continue 语句定义
+ContinueStmt ::= continue ;
+
+$ 实现 7.1 函数表达式块
+FuncExpStmtBlock ::= { FuncExpStmtSeq }
+FuncExpStmtSeq ::= Exp | Stmt FuncExpStmtSeq
+
+$ 实现 7.2 函数声明
+FunDef ::= FunHead FuncExpStmtBlock
+FunHead ::= fn <ID> ( ParamList )
+FunHead ::= fn <ID> ( ParamList ) -> Type
+ParamList ::= @
+ParamList ::= Param | Param, ParamList
+Param ::= VarMut <ID> : Type
+
+$ 7.3 选择表达式
+SelectExp ::= if Exp FuncExpStmtBlock else FuncExpStmtBlock
+
+
+$ 9.1 元组
+TupleTypeInner ::= @ | Type , TypeList
+TypeList ::= @ | Type | Type , TypeList
+TupleAssignInner ::= @ | Exp , TupleElementList
+TupleElementList ::= @ | Exp | Exp , TupleElementList
+
+$ 9.2 元组元素 已在 Assignable 中体现，<可赋值元素> -> <因子> '.' <INT>
