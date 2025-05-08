@@ -37,7 +37,7 @@ using namespace std;
 
 //特殊符号集大小
 #define  KEY_WORD_SIZE  13
-#define  MONOCULAR_OPERATOR_SIZE  5
+#define  MONOCULAR_OPERATOR_SIZE  6
 #define  BINOCULAR_OPERATOR_SIZE  6
 
 //定义各种token的种类   //关键字
@@ -73,7 +73,7 @@ const char Question_Mark = '?';
 // const string Binocular_Operator[BINOCULAR_OPERATOR_SIZE]={"++","--","&&","||","<=","!=","==",">=","+=","-=","*=","/=","<<",">>"}; //双目运算符 14个
 
 
-const string Monocular_Operator[MONOCULAR_OPERATOR_SIZE] = {"+", "-", "*", "/", "="};  //单目运算符 5个
+const string Monocular_Operator[MONOCULAR_OPERATOR_SIZE] = {"+", "-", "*", "/", "=","&"};  //单目运算符 6个
 const string Binocular_Operator[BINOCULAR_OPERATOR_SIZE] = {"==", ">", ">=", "<", "<=", "!="}; //双目运算符 6个
 
 

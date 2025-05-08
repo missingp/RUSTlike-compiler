@@ -1,5 +1,5 @@
 ﻿#include "lexer.h"
-#include <qdebug.h>
+#include<qdebug.h>
 
 
 #define SUCCESS 1
@@ -384,6 +384,15 @@ bool lexer::DFA(int line_count)
                     case 1:case 2:case 3:
                         dfa_token[count++] = final_buffer.buffer[i];
                         break;
+                    case 7:
+                        if (i + 1 <= final_buffer.count && final_buffer.buffer[i] == '.' && final_buffer.buffer[i + 1] == '.')
+                        {
+                            dfa_token[count] = '\0';
+                            i--;
+                            finish = 1;
+                            state = 9;//结束状态
+                            break;
+                        }
                     default:
                         dfa_token[count] = '\0';
                         i--;
@@ -401,9 +410,18 @@ bool lexer::DFA(int line_count)
                     case 7:
                         if (final_buffer.buffer[i] == '.')
                         {
+                            if (i + 1 <= final_buffer.count&&final_buffer.buffer[i + 1] == '.')
+                            {
+                                dfa_token[count] = '\0';
+                                i--;
+                                finish = 1;
+                                state = 9;//结束状态
+                                break;
+                            }
                             dfa_token[count++] = final_buffer.buffer[i];
                             break;
                         }
+
                         else
                         {
                             dfa_token[count] = '\0';
@@ -489,6 +507,11 @@ bool lexer::DFA(int line_count)
                 }
                 break;
             case 7:
+                if(final_buffer.buffer[i]=='.'&&final_buffer.buffer[i-1]=='.')
+                {
+                    dfa_token[count++] = final_buffer.buffer[i];
+                    break;
+                }
                 //要结束的字符，直接结束
                 dfa_token[count] = '\0';
                 i--;
@@ -499,6 +522,14 @@ bool lexer::DFA(int line_count)
                 switch (toState(final_buffer.buffer[i]))
                 {
                     case 8:case 11:
+                        if (final_buffer.buffer[i] == '*' || final_buffer.buffer[i]== '&')
+                        {
+                            dfa_token[count] = '\0';
+                            i--;
+                            finish = 1;
+                            state = 9;
+                            break;
+                        }
                         dfa_token[count++] = final_buffer.buffer[i];
                         break;
                     default:
@@ -621,7 +652,7 @@ bool lexer::tokenJudge(char* str, int line_count)
     }
     else if (isBracketsRightBig(str[0]) == 1 && strlen(str) == 1) {
         kind = my_BracketsRightBig;
-        fprintf(ftoken, "左大括号     %-13s%d\n", str, line_count);
+        fprintf(ftoken, "右大括号     %-13s%d\n", str, line_count);
     }
     else if (isEnd(str[0]) == 1 && strlen(str) == 1) {
         kind = my_End;
