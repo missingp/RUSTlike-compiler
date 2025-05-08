@@ -74,11 +74,11 @@ fn program_5_1(mut n:i32) {
     }
 }
 
-//fn program_5_2(mut n:i32) {
-//    for mut i in 1..n+1 {
-//        n=n-1;
-//    }
-//}
+fn program_5_2(mut n:i32) {
+    for mut i in 1..n+1 {
+        n=n-1;
+    }
+}
 
 
 
@@ -109,14 +109,14 @@ fn program_6_1() {
 }
 fn program_6_2__1() {
     let mut a:i32=1;
-    //let mut b:&mut i32=&mut a;
-    //let mut c:i32=*b;
-    // *b=2;
+    let mut b:&mut i32=&mut a;
+    let mut c:i32=*b;
+     *b=2;
 }
 fn program_6_2__2() {
     let a:i32=1;
-    //let b:& i32=&a;
-    //let c:i32=*b;
+    let b:& i32=&a;
+    let c:i32=*b;
 }
 fn program_7_1(mut x:i32,mut y:i32) {
     let mut z={
@@ -155,8 +155,8 @@ fn program_9_1() {
     let a:(i32,i32,i32);
     a=(1,2,3);
 }
-//fn program_9_2(mut a:(i32,i32)) {
-//    let mut b:i32=a.0;
-//    a.0=1;
-//}
+fn program_9_2(mut a:(i32,i32)) {
+    let mut b:i32=a.0;
+    a.0=1;
+}
 

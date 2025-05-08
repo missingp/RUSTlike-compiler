@@ -1,4 +1,28 @@
 ﻿   Qt/MSBuild: 3.3.1.1
    Qt: 6.9.0
+  Show.cpp
+  Lexer.cpp
+  token.cpp
   grammar.cpp
-  Parser.vcxproj -> D:\course\proj_compile\middle\RUSTlike-compiler\x64\Debug\Parser.exe
+  LR1.cpp
+  myQGraphicsView.cpp
+  Parser.cpp
+  main.cpp
+D:\course\proj_compile\RUSTlike-compiler\Parser\Lexer.cpp(54,72): warning C4819: 该文件包含不能在当前代码页(0)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\course\proj_compile\RUSTlike-compiler\Parser\Lexer.cpp(598,69): warning C4819: 该文件包含不能在当前代码页(0)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\course\proj_compile\RUSTlike-compiler\Parser\Lexer.cpp(603,69): warning C4819: 该文件包含不能在当前代码页(0)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\course\proj_compile\RUSTlike-compiler\Parser\Lexer.cpp(613,69): warning C4819: 该文件包含不能在当前代码页(0)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\course\proj_compile\RUSTlike-compiler\Parser\Lexer.cpp(618,71): warning C4819: 该文件包含不能在当前代码页(0)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\course\proj_compile\RUSTlike-compiler\Parser\Lexer.cpp(623,71): warning C4819: 该文件包含不能在当前代码页(0)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\course\proj_compile\RUSTlike-compiler\Parser\Lexer.cpp(639,69): warning C4819: 该文件包含不能在当前代码页(0)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\course\proj_compile\RUSTlike-compiler\Parser\Lexer.cpp(643,69): warning C4819: 该文件包含不能在当前代码页(0)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\course\proj_compile\RUSTlike-compiler\Parser\Lexer.cpp(647,69): warning C4819: 该文件包含不能在当前代码页(0)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\course\proj_compile\RUSTlike-compiler\Parser\Lexer.cpp(659,69): warning C4819: 该文件包含不能在当前代码页(0)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\course\proj_compile\RUSTlike-compiler\Parser\Lexer.cpp(691,71): warning C4819: 该文件包含不能在当前代码页(0)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\course\proj_compile\RUSTlike-compiler\Parser\Lexer.cpp(695,69): warning C4819: 该文件包含不能在当前代码页(0)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\course\proj_compile\RUSTlike-compiler\Parser\Lexer.cpp(708,86): warning C4819: 该文件包含不能在当前代码页(0)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+  qrc_Parser.cpp
+  moc_Parser.cpp
+  moc_myQGraphicsView.cpp
+  moc_Show.cpp
+  Parser.vcxproj -> D:\course\proj_compile\RUSTlike-compiler\x64\Debug\Parser.exe

@@ -17,7 +17,8 @@ Type ::= i32 | [ Type ; <INT> ] | ( TupleTypeInner ) | & mut Type | & Type
 
 $ 无法识别.
 Assignable ::= <ID> | Element [ Exp ] | Factor <INT>
-
+Assignable ::= Factor . <INT>
+Assignable ::= * Factor
 $ 声明列表
 DeclList ::= @ | Decl DeclList
 

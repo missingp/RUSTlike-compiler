@@ -37,25 +37,53 @@ continue: first set: {continue }
 i32: first set: {i32 }
 <NUM>: first set: {<NUM> }
 <INT>: first set: {<INT> }
+&: first set: {& }
 #: first set: {# }
-S: first set: {@ fn }
-Program: first set: {@ fn }
-DeclList: first set: {@ fn }
-VarDeclInner: first set: {mut }
-Type: first set: {i32 }
-Assignable: first set: {<ID> }
-Decl: first set: {fn }
+S: first set: {@ fn let }
+Program: first set: {@ fn let }
+DeclList: first set: {@ fn let }
+Type: first set: {( [ i32 & }
+TupleTypeInner: first set: {@ ( [ i32 & }
+Assignable: first set: {* ( [ <ID> <INT> & }
+Element: first set: {* ( [ <ID> <INT> & }
+Exp: first set: {if loop * ( { [ <ID> <INT> & }
+Factor: first set: {* ( [ <ID> <INT> & }
+Decl: first set: {fn let }
 FunDef: first set: {fn }
+VarDecl: first set: {let }
+VarDeclAssign: first set: {let }
 FunHead: first set: {fn }
 Block: first set: {{ }
-ParamList: first set: {@ mut }
-StmtList: first set: {@ return ( ; <ID> <INT> }
-Stmt: first set: {return ( ; <ID> <INT> }
+ParamList: first set: {@ mut <ID> }
+Param: first set: {mut <ID> }
+VarMut: first set: {@ mut }
+StmtList: first set: {@ let return if while for loop break continue * ( { [ ; <ID> <INT> & }
+Stmt: first set: {let return if while for loop break continue * ( { [ ; <ID> <INT> & }
+AssignStmt: first set: {* ( [ <ID> <INT> & }
 ReturnStmt: first set: {return }
-Param: first set: {mut }
-VarMut: first set: {mut }
-Exp: first set: {( <ID> <INT> }
-AddSubExp: first set: {( <ID> <INT> }
-Item: first set: {( <ID> <INT> }
-Factor: first set: {( <ID> <INT> }
-Element: first set: {( <ID> <INT> }
+IfStmt: first set: {if }
+WhileStmt: first set: {while }
+ForStmt: first set: {for }
+LoopStmt: first set: {loop }
+BreakStmt: first set: {break }
+ContinueStmt: first set: {continue }
+VarDeclInner: first set: {mut <ID> }
+abc: first set: {}
+AddSubExp: first set: {* ( [ <ID> <INT> & }
+CompOp: first set: {== != < > <= >= }
+FuncExpStmtBlock: first set: {{ }
+SelectExp: first set: {if }
+AddSubOp: first set: {+ - }
+MulDivExp: first set: {* ( [ <ID> <INT> & }
+MulDivOp: first set: {* / }
+Item: first set: {* ( [ <ID> <INT> & }
+ArrayElementList: first set: {@ if loop * ( { [ <ID> <INT> & }
+TupleAssignInner: first set: {@ if loop * ( { [ <ID> <INT> & }
+ArgList: first set: {@ if loop * ( { [ <ID> <INT> & }
+ArrayElement: first set: {if loop * ( { [ <ID> <INT> & }
+ElsePart: first set: {@ else }
+Iterable: first set: {if loop * ( { [ <ID> <INT> & }
+FuncExpStmtSeq: first set: {let return if while for loop break continue * ( { [ ; <ID> <INT> & }
+Param,: first set: {}
+TypeList: first set: {@ ( [ i32 & }
+TupleElementList: first set: {@ if loop * ( { [ <ID> <INT> & }
