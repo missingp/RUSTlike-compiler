@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>D:\course\proj_compile\RUSTlike-compiler\x64\Debug\Parser.exe</FullPath>
+      <FullPath>D:\course\proj_compile\middle\RUSTlike-compiler\x64\Debug\Parser.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

@@ -188,7 +188,7 @@ void Parser::loadGrammar()
 */
 void Parser::loadCode()
 {
-	QString fileName = QFileDialog::getOpenFileName(this, "导入文件", ".", "files(*.txt *.cpp *.c)");
+	QString fileName = QFileDialog::getOpenFileName(this, "导入文件", ".", "files(*.txt *.rs)");
 	if (!fileName.isEmpty()) {
 		this->codeFile = fileName;
 		fstream fcode;
