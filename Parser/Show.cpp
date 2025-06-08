@@ -12,9 +12,26 @@
 
 
 
+// loading::loading(QWidget* parent) : QMainWindow(parent)
+// {
+//    this->ui = new Ui::loadingWindow;
+//    this->ui->setupUi(this);
+
+//    QLabel* label = new QLabel(this->ui->centralwidget);
+
+//    // 创建 QMovie 对象并设置 GIF 图片路径
+//    QPixmap* movie = new QPixmap(":/Parser/picture/loading.png");
+//    // 设置 QMovie 对象到 QLabel
+//    label->setPixmap(*movie);
+
+//    // 设置 QLabel 自适应大小
+//    label->setScaledContents(true);
+// }
+
+
 Show::Show(QWidget* parent) : QMainWindow(parent)
 {
-    this->layout =NULL;
+    this->layout = NULL;
     this->ui = new Ui::ShowWindow;
     this->ui->setupUi(this);
 }
@@ -26,8 +43,8 @@ Show::~Show()
 
 /**
 * @func:   展示产生的token的列表
-* @para:   
-* @return: 
+* @para:
+* @return:
 */
 void Show::showToken()
 {
@@ -58,7 +75,7 @@ void Show::showToken()
     // 设置主窗口的布局
     this->ui->centralwidget->setLayout(this->layout);
 }
-  
+
 /**
 * @func:   展示词法DFA
 * @para:
@@ -66,7 +83,7 @@ void Show::showToken()
 */
 void Show::showDFA()
 {
-    
+
     // 创建一个 QGraphicsView
     myQGraphicsView* view = new myQGraphicsView(this->ui->centralwidget);
     // 创建一个 QGraphicsScene
@@ -108,7 +125,7 @@ void Show::showTable()
         delete this->layout;
     }
     this->layout = new QVBoxLayout(this->ui->centralwidget);
-    
+
 
 
     // 打开CSV文件
@@ -125,16 +142,16 @@ void Show::showTable()
             // 在QTableWidget中插入一行
             int row = tableWidget->rowCount();
             tableWidget->insertRow(row);
-           
+
 
             // 在当前行的每一列中插入数据
             tableWidget->setColumnCount(fields.size());
             for (int column = 0; column < fields.size(); column++) {
-               // qDebug() << fields.at(column);
+                // qDebug() << fields.at(column);
                 QTableWidgetItem* item = new QTableWidgetItem(fields.at(column));
                 tableWidget->setItem(row, column, item);
             }
-           // tableWidget->resizeColumnsToContents();
+            // tableWidget->resizeColumnsToContents();
         }
         tableWidget->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
@@ -166,7 +183,7 @@ void Show::showTree()
 
     // 创建一个 QGraphicsScene
     QGraphicsScene* scene = new QGraphicsScene(this->ui->centralwidget);
-   
+
     QPixmap pixmap(TREE_PNG_FILE);
 
     scene->addPixmap(pixmap);
@@ -196,8 +213,8 @@ void Show::showTree()
 */
 void Show::showParseDFA()
 {
-   
-    
+
+
     this->ui->centralwidget->setWindowTitle("LR(1) DFA显示");
     // 创建一个 QGraphicsView
     myQGraphicsView* view = new myQGraphicsView(this->ui->centralwidget);
@@ -260,4 +277,34 @@ void Show::showProcess()
     // 设置主窗口的布局
     this->ui->centralwidget->setLayout(this->layout);
 
+}
+
+
+void Show::showQuaternion()
+{
+    //this->ui->centralwidget->setWindowTitle("归约过程显示");
+    QTextBrowser* textBrowser = new QTextBrowser(this->ui->centralwidget);
+    // 设置 TextBrowser 的内容
+    QFile file(QUATERNION_FILE);
+
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream in(&file);
+        // 读取文件内容并写入 TextBrowser
+        textBrowser->setPlainText(in.readAll());
+        file.close();
+    }
+    else {
+        // 处理文件打开失败的情况
+        textBrowser->setPlainText("Error: Unable to open the file.");
+    }
+    if (this->layout != NULL) {
+        delete this->layout;
+    }
+    this->layout = new QVBoxLayout(this->ui->centralwidget);
+
+    // 将 TextBrowser 添加到布局中
+    this->layout->addWidget(textBrowser);
+
+    // 设置主窗口的布局
+    this->ui->centralwidget->setLayout(this->layout);
 }

@@ -5,7 +5,13 @@
 #include <QtWidgets/QMainWindow>
 #include "ui_Show.h"
 #include "myQGraphicsView.h"
+//#include"ui_loading.h"
 #include<qlayout.h>
+#include<qlabel.h>
+#include<qmovie.h>
+#include<iostream>
+#include<qtimer.h>
+
 
 
 //lr1相关文件地址
@@ -29,6 +35,7 @@
 #define EXTENDED_GRAMMAR_FILE "results/Extended_Grammar.txt"
 #define FIRST_SET_FILE "results/First_Set.txt"
 
+#define  QUATERNION_FILE  "results/Quaternion_List.txt"
 
 //个人修改页面
 class Show : public QMainWindow
@@ -44,11 +51,29 @@ public:
     void showTree(); //展示语法分析树
     void showProcess(); //展示归约过程
     void showParseDFA();
-
+    void showQuaternion();
+    //void showloading();
 private:
     Ui::ShowWindow* ui;                       // 主页面
-    QVBoxLayout * layout;
+    QVBoxLayout* layout;
 };
+
+
+////个人修改页面
+//class loading : public QMainWindow
+//{
+//    Q_OBJECT
+//
+//public:
+//    loading(QWidget* parent = nullptr);
+//private:
+//    Ui::loadingWindow* ui;                       // 主页面
+//
+//
+//
+//
+//
+//};
 
 
 

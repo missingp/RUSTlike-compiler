@@ -13,12 +13,14 @@
 
 
 
+
+
 class Parser : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    Parser(QWidget *parent = nullptr);
+    Parser(QWidget* parent = nullptr);
     ~Parser();
 private:
     Ui::ParserClass* ui;
@@ -27,17 +29,20 @@ private:
     bool errorFlag;
     int errorLine;
     bool loadGrammarFlag;
+    bool grammarFlag;
     bool lexerFlag;
     bool compileFlag;
     bool treeFlag;
     bool dfaFlag;
 
     Show* pageShow;
-    lr1Grammar *my_lr1Grammar;
-    lexer *my_lexer;
+    lr1Grammar* my_lr1Grammar;
+    lexer* my_lexer;
     void loadCode();//导入源码
     void loadGrammar();//导入文法
     void restart(); //重启编译程序
     void compile(); //开始编译
-    void showErrorLine(int n,QColor color);//展示错误行
+    void showErrorLine(int n, QColor color);//展示错误行
+    void printTime(int ms);//打印编译耗时时间
+    int readGrammar();
 };

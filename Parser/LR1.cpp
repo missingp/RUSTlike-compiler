@@ -14,12 +14,12 @@
 /**
  * @brief： lr1Item构造函数
  * @param：  int l   产生式左边的符号
-             vector<int> &r   产生式右边的符号
+			 vector<int> &r   产生式右边的符号
 			 int ds     点符的位置
 			 int fw     向前看的符号
 			 int gi      产生该Item的文法式序号
 
- * @return 
+ * @return
  * */
 lr1Item::lr1Item(int l, vector<int>& r, int ds, int fw, int gi)
 {
@@ -88,7 +88,7 @@ bool lr1Closure::operator==(lr1Closure& clos)
 	if (this->closure.size() != clos.closure.size())
 		return false;
 
-    //两个size是相等的才会到这里
+	//两个size是相等的才会到这里
 	for (int i = 0; i < clos.closure.size(); i++)
 	{
 		if (!this->isIn(clos.closure[i]))
@@ -99,8 +99,8 @@ bool lr1Closure::operator==(lr1Closure& clos)
 
 /**
  * @brief：   得到可移进的字符以及项目在闭包中的位置
- * @param：  
- * @return   
+ * @param：
+ * @return
  * */
 unordered_map<int, vector<int>> lr1Closure::getShiftinSymbol()
 {
@@ -149,6 +149,9 @@ vector<pair<int, int>> lr1Closure::getReduceSymbol()
 /*********************************LR1 Grammar********************************/
 
 
+
+
+
 /**
  * @brief：   判断闭包集合中是否有该闭包，
  * @param：    lr1Closure& clos闭包
@@ -168,7 +171,7 @@ int lr1Grammar::getClosureIndex(lr1Closure& clos)
 
 /**
  * @brief：   生成0号项目集闭包
- * @param：   
+ * @param：
  * @return
  * */
 void lr1Grammar::initClosure0()
@@ -255,8 +258,8 @@ lr1Closure lr1Grammar::generateClosure(vector<lr1Item> lr1)
 
 /**
  * @brief：   生成DFA
- * @param：   
- * @return  
+ * @param：
+ * @return
  * */
 void lr1Grammar::generateDFA()
 {
@@ -309,8 +312,8 @@ void lr1Grammar::generateDFA()
 
 /**
  * @brief：   生成ACTION GOTO表
- * @param：  
- * @return   
+ * @param：
+ * @return
  * */
 void lr1Grammar::generateACTION_GOTO()
 {
@@ -354,8 +357,8 @@ void lr1Grammar::generateACTION_GOTO()
 
 /**
  * @brief：   打印action goto表到csv文件中
- * @param：    
- * @return   
+ * @param：
+ * @return
  * */
 void lr1Grammar::printACTION_GOTO()
 {
@@ -461,6 +464,12 @@ int lr1Grammar::reduction(vector<elem>& lexical_result)
 	status_stack.push_back(0);  // 状态栈先压入状态0
 	symbol_stack.push_back(symbolIndex(EndToken));  // 在符号栈中先放入结束符号
 
+
+	//语义分析初始化
+	semantic_analysis = SemanticAnalysis();
+	semantic_analysis.AddSymbolToList({ StartToken,"",-1,-1 });
+
+
 	// 打开文件及错误处理
 	ofstream ofs(REDUCTION_PROCESS_FILE, ios::out);
 	if (ofs.is_open() == 0) {
@@ -513,91 +522,107 @@ int lr1Grammar::reduction(vector<elem>& lexical_result)
 		{
 			switch (it->second.op)
 			{
-				case actionOption::SHIFT_IN:
+			case actionOption::SHIFT_IN:
+			{
+				// 移进
+				status_stack.push_back(it->second.serial);  // 新状态入栈
+				symbol_stack.push_back(present_terminal_serial);  // 读入的终结符压栈
+				serial_stack.push_back(node_serial);
+				ftree << "n" << node_serial++ << "[label=\"" << lexical_result[i].value << "\",color=red];" << endl;
+
+				//SHIFT_IN 移进，也需要移进语义分析的符号流
+				semantic_analysis.AddSymbolToList({ lexical_result[i].type , lexical_result[i].value , -1, -1 });
+				break;
+			}
+			case actionOption::REDUCE:
+			{
+				// 归约，要归约则当前输入串不加一！！
+				i--;
+				production production_need = productions[it->second.serial];  // 要使用的产生式
+				int right_length = production_need.right_symbol.size();  // 要归约掉的长度
+				if (right_length == 1)
 				{
-					// 移进
-					status_stack.push_back(it->second.serial);  // 新状态入栈
-					symbol_stack.push_back(present_terminal_serial);  // 读入的终结符压栈
-					serial_stack.push_back(node_serial);
-					ftree << "n" << node_serial++ << "[label=\"" << lexical_result[i].value << "\",color=red];" << endl;
+					// 特判 epsilon，因为存的 size 是1，但实际 length 是0
+					if (production_need.right_symbol[0] == symbolIndex("@"))
+						right_length = 0;
+				}
+				vector<int> drop;
+				for (int k = 0; k < right_length; k++)
+				{
+					status_stack.pop_back();  // 状态栈移出
+					symbol_stack.pop_back();  // 符号栈移出
+					drop.push_back(serial_stack.back());
+					serial_stack.pop_back();
+				}
+				symbol_stack.push_back(production_need.left_symbol);  // 符号栈压入非终结符
+				int temp_status = status_stack.back();
+
+				// 归约之后查看 GOTO 表
+				auto goto_it = GOTO.find(pair<int, int>(temp_status, production_need.left_symbol));
+				if (goto_it == GOTO.end())  // 不存在转移，则应退出 GOTO，编译错误
+				{
+					err_code = GOTO_ERROR;
+					reduce_error_status = temp_status;
+					reduce_error_symbol = production_need.left_symbol;
 					break;
 				}
-				case actionOption::REDUCE:
+				else
 				{
-					// 归约，要归约则当前输入串不加一！！
-					i--;
-					production production_need = productions[it->second.serial];  // 要使用的产生式
-					int right_length = production_need.right_symbol.size();  // 要归约掉的长度
-					if (right_length == 1)
+					if (goto_it->second.op == gotoOption::GO)
 					{
-						// 特判 epsilon，因为存的 size 是1，但实际 length 是0
-						if (production_need.right_symbol[0] == symbolIndex("@"))
-							right_length = 0;
-					}
-					vector<int> drop;
-					for (int k = 0; k < right_length; k++)
-					{
-						status_stack.pop_back();  // 状态栈移出
-						symbol_stack.pop_back();  // 符号栈移出
-						drop.push_back(serial_stack.back());
-						serial_stack.pop_back();
-					}
-					symbol_stack.push_back(production_need.left_symbol);  // 符号栈压入非终结符
-					int temp_status = status_stack.back();
+						status_stack.push_back(goto_it->second.serial);  // 将新状态压栈
+						serial_stack.push_back(node_serial);
 
-					// 归约之后查看 GOTO 表
-					auto goto_it = GOTO.find(pair<int, int>(temp_status, production_need.left_symbol));
-					if (goto_it == GOTO.end())  // 不存在转移，则应退出 GOTO，编译错误
-					{
-						err_code = GOTO_ERROR;
-						reduce_error_status = temp_status;
-						reduce_error_symbol = production_need.left_symbol;
-						break;
-					}
-					else
-					{
-						if (goto_it->second.op == gotoOption::GO)
-						{
-							status_stack.push_back(goto_it->second.serial);  // 将新状态压栈
-							serial_stack.push_back(node_serial);
-						}
-						else  // 不会出现
-						{
-							err_code = GOTO_ERROR;
+						//语义分析，归约，使用归约时的产生式，在语法分析归约完全成功时调用
+						vector<string> production_right;
+						for (int i = 0; i < production_need.right_symbol.size(); i++)
+							production_right.push_back(symbols[production_need.right_symbol[i]].name);
+						//传给语义分析的产生式是语法规则的字符串形式，这里使用的是symbol数组的tag
+						int semantic_res = semantic_analysis.Analysis(symbols[production_need.left_symbol].name, production_right, lexical_result[i].line);
+						if (semantic_res != 1) {
+							err_code = semantic_res;
+							cout << "err_code" << err_code;
 							break;
 						}
-					}
 
-					ftree << "n" << node_serial++ << "[label=\"" << symbols[production_need.left_symbol].name << "\"];\n";
-					if (right_length == 0)
-					{
-						ftree << "e" << node_serial << "[label=\"@\"];\n";
-						ftree << "n" << node_serial - 1 << " -> " << "e" << node_serial << ";\n";
 					}
-					else
+					else  // 不会出现
 					{
-						for (auto t = drop.begin(); t != drop.end(); t++)
-							ftree << "n" << node_serial - 1 << " -> " << "n" << *t << ";\n";
+						err_code = GOTO_ERROR;
+						break;
 					}
-					break;
 				}
-				case actionOption::ACCEPT:
+
+				ftree << "n" << node_serial++ << "[label=\"" << symbols[production_need.left_symbol].name << "\"];\n";
+				if (right_length == 0)
 				{
-					ftree << "}";
-					ftree.close();
-					// 接受状态，直接返回
-					ofs << endl << "Parse successfully!" << endl;
-					ofs.close();
-					fwrong.close();
-					return SUCESS;
+					ftree << "e" << node_serial << "[label=\"@\"];\n";
+					ftree << "n" << node_serial - 1 << " -> " << "e" << node_serial << ";\n";
 				}
-				case actionOption::REJECT:
+				else
 				{
-					err_code = ACTION_ERROR;
-					break;
+					for (auto t = drop.begin(); t != drop.end(); t++)
+						ftree << "n" << node_serial - 1 << " -> " << "n" << *t << ";\n";
 				}
-				default:
-					break;
+				break;
+			}
+			case actionOption::ACCEPT:
+			{
+				ftree << "}";
+				ftree.close();
+				// 接受状态，直接返回
+				ofs << endl << "Parse successfully!" << endl;
+				ofs.close();
+				fwrong.close();
+				return SUCESS;
+			}
+			case actionOption::REJECT:
+			{
+				err_code = ACTION_ERROR;
+				break;
+			}
+			default:
+				break;
 			}
 		}
 
@@ -620,6 +645,10 @@ int lr1Grammar::reduction(vector<elem>& lexical_result)
 			ofs << endl << "语法分析错误:不存在当前的GOTO!" << endl;
 			ofs << "当前状态: " << reduce_error_status << endl;
 			ofs << "当前终结符类型: " << symbols[reduce_error_symbol].name << endl;
+			break;
+		}
+		else if (err_code > 10) {
+			this->error_line = lexical_result[i].line;
 			break;
 		}
 
@@ -656,14 +685,14 @@ int lr1Grammar::reduction(vector<elem>& lexical_result)
 int lr1Grammar::printParseDFA() {
 
 
-	ofstream fdot(DFA_DOT_FILE,ios::out);
+	ofstream fdot(DFA_DOT_FILE, ios::out);
 	if (!fdot.is_open()) {
 		return DFA_DOT_FILE_OPEN_ERROR;
 	}
-	
+
 	fdot << "digraph G {\n";
 	fdot << "node [shape=rectangle, fontname=\"SimSun\"];\n";
-    
+
 	for (const auto& entry : DFA) {
 		fdot << "  \"I" << entry.first.first << "\" -> \"I" << entry.second << "\" [label=\"";
 		// 此处假设符号可以直接输出，实际可能需要转换

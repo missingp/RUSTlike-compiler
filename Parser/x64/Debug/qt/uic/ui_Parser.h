@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'Parser.ui'
 **
-** Created by: Qt User Interface Compiler version 6.9.0
+** Created by: Qt User Interface Compiler version 6.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -38,6 +38,7 @@ public:
     QAction *action_Run;
     QAction *action_Restart;
     QAction *actionLR_1_DFA;
+    QAction *action_Quaternion;
     QWidget *centralWidget;
     QGroupBox *groupBox;
     QTextEdit *textEdit;
@@ -48,6 +49,7 @@ public:
     QMenu *menu_W;
     QMenu *menu_G;
     QMenu *menu_C;
+    QMenu *menu_S;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *ParserClass)
@@ -56,7 +58,7 @@ public:
             ParserClass->setObjectName("ParserClass");
         ParserClass->resize(829, 614);
         QIcon icon;
-        icon.addFile(QString::fromUtf8(":/Parser/picture/icon.png"), QSize(), QIcon::Mode::Normal, QIcon::State::Off);
+        icon.addFile(QString::fromUtf8(":/Parser/picture/icon.png"), QSize(), QIcon::Normal, QIcon::Off);
         ParserClass->setWindowIcon(icon);
         action_Code = new QAction(ParserClass);
         action_Code->setObjectName("action_Code");
@@ -80,6 +82,8 @@ public:
         action_Restart->setObjectName("action_Restart");
         actionLR_1_DFA = new QAction(ParserClass);
         actionLR_1_DFA->setObjectName("actionLR_1_DFA");
+        action_Quaternion = new QAction(ParserClass);
+        action_Quaternion->setObjectName("action_Quaternion");
         centralWidget = new QWidget(ParserClass);
         centralWidget->setObjectName("centralWidget");
         centralWidget->setStyleSheet(QString::fromUtf8("QWidget {\n"
@@ -190,7 +194,7 @@ public:
 ""));
         textBrowser = new QTextBrowser(groupBox_2);
         textBrowser->setObjectName("textBrowser");
-        textBrowser->setGeometry(QRect(10, 30, 811, 171));
+        textBrowser->setGeometry(QRect(10, 30, 811, 161));
         QFont font1;
         font1.setFamilies({QString::fromUtf8("\345\256\213\344\275\223")});
         textBrowser->setFont(font1);
@@ -237,6 +241,8 @@ public:
         menu_G->setObjectName("menu_G");
         menu_C = new QMenu(menuBar);
         menu_C->setObjectName("menu_C");
+        menu_S = new QMenu(menuBar);
+        menu_S->setObjectName("menu_S");
         ParserClass->setMenuBar(menuBar);
         statusBar = new QStatusBar(ParserClass);
         statusBar->setObjectName("statusBar");
@@ -272,6 +278,7 @@ public:
         menuBar->addAction(menu_F->menuAction());
         menuBar->addAction(menu_W->menuAction());
         menuBar->addAction(menu_G->menuAction());
+        menuBar->addAction(menu_S->menuAction());
         menuBar->addAction(menu_C->menuAction());
         menu_F->addAction(action_Code);
         menu_F->addAction(action_Grammar);
@@ -283,6 +290,7 @@ public:
         menu_G->addAction(actionLR_1_DFA);
         menu_C->addAction(action_Run);
         menu_C->addAction(action_Restart);
+        menu_S->addAction(action_Quaternion);
 
         retranslateUi(ParserClass);
 
@@ -303,12 +311,14 @@ public:
         action_Run->setText(QCoreApplication::translate("ParserClass", "\345\274\200\345\247\213\347\274\226\350\257\221", nullptr));
         action_Restart->setText(QCoreApplication::translate("ParserClass", "\351\207\215\347\275\256", nullptr));
         actionLR_1_DFA->setText(QCoreApplication::translate("ParserClass", "LR(1)  DFA", nullptr));
+        action_Quaternion->setText(QCoreApplication::translate("ParserClass", "\345\233\233\345\205\203\345\274\217", nullptr));
         groupBox->setTitle(QCoreApplication::translate("ParserClass", "\344\273\243\347\240\201", nullptr));
         groupBox_2->setTitle(QCoreApplication::translate("ParserClass", "\350\276\223\345\207\272", nullptr));
         menu_F->setTitle(QCoreApplication::translate("ParserClass", "\346\226\207\344\273\266(F)", nullptr));
         menu_W->setTitle(QCoreApplication::translate("ParserClass", "\350\257\215\346\263\225(W)", nullptr));
         menu_G->setTitle(QCoreApplication::translate("ParserClass", "\350\257\255\346\263\225(G)", nullptr));
         menu_C->setTitle(QCoreApplication::translate("ParserClass", "\347\274\226\350\257\221(C)", nullptr));
+        menu_S->setTitle(QCoreApplication::translate("ParserClass", "\350\257\255\344\271\211(S)", nullptr));
     } // retranslateUi
 
 };

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>RustLikeCompiler</string>
+   <string>Light Compiler Based on LR1 Metod(to be continued)</string>
   </property>
   <property name="windowIcon">
    <iconset resource="Parser.qrc">
@@ -85,7 +85,7 @@ QGroupBox::indicator {
     <property name="title">
      <string>代码</string>
     </property>
-    <widget class="MyTextEdit" name="textEdit">
+    <widget class="QTextEdit" name="textEdit">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -166,7 +166,7 @@ QGroupBox::indicator {
        <x>10</x>
        <y>30</y>
        <width>811</width>
-       <height>171</height>
+       <height>161</height>
       </rect>
      </property>
      <property name="font">
@@ -192,7 +192,7 @@ QGroupBox::indicator {
      <x>0</x>
      <y>0</y>
      <width>829</width>
-     <height>31</height>
+     <height>35</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -253,9 +253,16 @@ QMenuBar::item:selected {
     <addaction name="action_Run"/>
     <addaction name="action_Restart"/>
    </widget>
+   <widget class="QMenu" name="menu_S">
+    <property name="title">
+     <string>语义(S)</string>
+    </property>
+    <addaction name="action_Quaternion"/>
+   </widget>
    <addaction name="menu_F"/>
    <addaction name="menu_W"/>
    <addaction name="menu_G"/>
+   <addaction name="menu_S"/>
    <addaction name="menu_C"/>
   </widget>
   <widget class="QStatusBar" name="statusBar">
@@ -344,15 +351,13 @@ QStatusBar QLabel {
     <string>LR(1)  DFA</string>
    </property>
   </action>
+  <action name="action_Quaternion">
+   <property name="text">
+    <string>四元式</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>MyTextEdit</class>
-   <extends>QTextEdit</extends>
-   <header>mytextedit.hpp</header>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="Parser.qrc"/>
  </resources>

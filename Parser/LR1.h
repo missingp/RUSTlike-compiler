@@ -6,6 +6,7 @@
 #include <queue>
 #include <fstream>
 #include <iomanip>
+#include "Semantic.h"
 
 
 #define Table_FILE  "results/ACTION_GOTO_Table.csv" //输出表地址
@@ -46,7 +47,7 @@ public:
 	int forward;//向前看的符号编号 
 	int grammar_index;//这个LR1项是哪个产生式出来的,其实是有冗余，有这个index就已经有了left和right
 public:
-	
+
 	lr1Item() { left = 0; dot_pos = 0; forward = 0; grammar_index = 0; right.push_back(0); };
 	lr1Item(int l, vector<int>& r, int ds, int fw, int gi);
 	bool operator==(const lr1Item& item);
@@ -64,7 +65,7 @@ public:
 	bool operator==(lr1Closure& clos);
 	unordered_map<int, vector<int>> getShiftinSymbol();//得到可移进的字符以及项目在闭包中的位置
 	vector<pair<int, int>> getReduceSymbol();//得到可以归约的符号和对应的产生式的序号
-	
+
 };
 
 
@@ -93,8 +94,8 @@ public:
 		this->op = ac_op;
 		this->serial = num;
 	}
-	ACTIONItem(){}
-	
+	ACTIONItem() {}
+
 };
 
 class GOTOItem
@@ -103,11 +104,11 @@ public:
 	gotoOption op;
 	int serial;//编号，在GOTO表里只有转移编号，就是闭包集中的编号
 	GOTOItem(gotoOption goto_op, int num) {
-	   this->op = goto_op;
-	   this->serial = num;
+		this->op = goto_op;
+		this->serial = num;
 	}
-	GOTOItem(){}
-	
+	GOTOItem() {}
+
 };
 
 //LR(1)文法总过程
@@ -115,11 +116,11 @@ class lr1Grammar :public grammar
 {
 public:
 	int error_line;
-
+	SemanticAnalysis semantic_analysis;
 	vector<lr1Item> item_sum;//存所有的项目，set没有编号
 	vector<lr1Closure> closure_sum;//所有可能出现的闭包，相当于编个号
-	unordered_map<pair<int, int>, int,HashFunc,EqualKey> DFA;//map<<closure的编号，符号的编号>，目标closure编号>
-	
+	map<pair<int, int>, int> DFA;//map<<closure的编号，符号的编号>，目标closure编号>
+
 	unordered_map<pair<int, int>, ACTIONItem, HashFunc, EqualKey> ACTION;//ACTION表
 	unordered_map<pair<int, int>, GOTOItem, HashFunc, EqualKey> GOTO;
 
@@ -128,6 +129,8 @@ public:
 public:
 	lr1Grammar() {};
 
+	//void init();//重新初始化，清空
+
 	void initClosure0(); //从grammar继承的productions，从开始产生式开始，使得项目集中第一个是闭包
 	lr1Closure generateClosure(vector<lr1Item>);//给定项目计算闭包
 	int getClosureIndex(lr1Closure& clos);//判断闭包集合中是否有该闭包，若有返回序号，若没有返回-1
@@ -135,8 +138,8 @@ public:
 
 
 	void generateACTION_GOTO();//计算ACTION表和GOTO表
-	void printACTION_GOTO();//打印ACTION和GOTO表为csv文件
-    
+	void printACTION_GOTO();//打印ACTION和GOTO表为csv文件yuf
+
 	int reduction(vector<elem>& lexical_res);//进行归约，在过程中进行打印
 
 	int printParseDFA();//绘制DFA
