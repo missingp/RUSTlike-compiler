@@ -1,0 +1,120 @@
+STEP: 0
+STATUS_STACK:  0
+SYMBOL_STACK: #
+INPUT: fnmain(){letmuta:i32=1;letmuta=2;letmuta:i32=3;}#
+
+STEP: 1
+STATUS_STACK:  0 10
+STATUS_SYMBOL: #fn
+INPUT: <ID>(){letmut<ID>:i32=<INT>;letmut<ID>=<INT>;letmut<ID>:i32=<INT>;}#
+
+STEP: 2
+STATUS_STACK:  0 10 18
+STATUS_SYMBOL: #fn<ID>
+INPUT: (){letmut<ID>:i32=<INT>;letmut<ID>=<INT>;letmut<ID>:i32=<INT>;}#
+
+STEP: 3
+STATUS_STACK:  0 10 18 63
+STATUS_SYMBOL: #fn<ID>(
+INPUT: ){letmut<ID>:i32=<INT>;letmut<ID>=<INT>;letmut<ID>:i32=<INT>;}#
+
+STEP: 4
+STATUS_STACK:  0 10 18 63 208
+STATUS_SYMBOL: #fn<ID>(ParamList
+INPUT: ){letmut<ID>:i32=<INT>;letmut<ID>=<INT>;letmut<ID>:i32=<INT>;}#
+
+STEP: 5
+STATUS_STACK:  0 10 18 63 208 401
+STATUS_SYMBOL: #fn<ID>(ParamList)
+INPUT: {letmut<ID>:i32=<INT>;letmut<ID>=<INT>;letmut<ID>:i32=<INT>;}#
+
+STEP: 6
+STATUS_STACK:  0 8
+STATUS_SYMBOL: #FunHead
+INPUT: {letmut<ID>:i32=<INT>;letmut<ID>=<INT>;letmut<ID>:i32=<INT>;}#
+
+STEP: 7
+STATUS_STACK:  0 8 17
+STATUS_SYMBOL: #FunHead{
+INPUT: letmut<ID>:i32=<INT>;letmut<ID>=<INT>;letmut<ID>:i32=<INT>;}#
+
+STEP: 8
+STATUS_STACK:  0 8 17 35
+STATUS_SYMBOL: #FunHead{let
+INPUT: mut<ID>:i32=<INT>;letmut<ID>=<INT>;letmut<ID>:i32=<INT>;}#
+
+STEP: 9
+STATUS_STACK:  0 8 17 35 12
+STATUS_SYMBOL: #FunHead{letmut
+INPUT: <ID>:i32=<INT>;letmut<ID>=<INT>;letmut<ID>:i32=<INT>;}#
+
+STEP: 10
+STATUS_STACK:  0 8 17 35 12 22
+STATUS_SYMBOL: #FunHead{letmut<ID>
+INPUT: :i32=<INT>;letmut<ID>=<INT>;letmut<ID>:i32=<INT>;}#
+
+STEP: 11
+STATUS_STACK:  0 8 17 35 102
+STATUS_SYMBOL: #FunHead{letVarDeclInner
+INPUT: :i32=<INT>;letmut<ID>=<INT>;letmut<ID>:i32=<INT>;}#
+
+STEP: 12
+STATUS_STACK:  0 8 17 35 102 259
+STATUS_SYMBOL: #FunHead{letVarDeclInner:
+INPUT: i32=<INT>;letmut<ID>=<INT>;letmut<ID>:i32=<INT>;}#
+
+STEP: 13
+STATUS_STACK:  0 8 17 35 102 259 66
+STATUS_SYMBOL: #FunHead{letVarDeclInner:i32
+INPUT: =<INT>;letmut<ID>=<INT>;letmut<ID>:i32=<INT>;}#
+
+STEP: 14
+STATUS_STACK:  0 8 17 35 102 259 441
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type
+INPUT: =<INT>;letmut<ID>=<INT>;letmut<ID>:i32=<INT>;}#
+
+STEP: 15
+STATUS_STACK:  0 8 17 35 102 259 441 616
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=
+INPUT: <INT>;letmut<ID>=<INT>;letmut<ID>:i32=<INT>;}#
+
+STEP: 16
+STATUS_STACK:  0 8 17 35 102 259 441 616 87
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=<INT>
+INPUT: ;letmut<ID>=<INT>;letmut<ID>:i32=<INT>;}#
+
+STEP: 17
+STATUS_STACK:  0 8 17 35 102 259 441 616 82
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Element
+INPUT: ;letmut<ID>=<INT>;letmut<ID>:i32=<INT>;}#
+
+STEP: 18
+STATUS_STACK:  0 8 17 35 102 259 441 616 81
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Factor
+INPUT: ;letmut<ID>=<INT>;letmut<ID>:i32=<INT>;}#
+
+STEP: 19
+STATUS_STACK:  0 8 17 35 102 259 441 616 80
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Item
+INPUT: ;letmut<ID>=<INT>;letmut<ID>:i32=<INT>;}#
+
+STEP: 20
+STATUS_STACK:  0 8 17 35 102 259 441 616 77
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=MulDivExp
+INPUT: ;letmut<ID>=<INT>;letmut<ID>:i32=<INT>;}#
+
+STEP: 21
+STATUS_STACK:  0 8 17 35 102 259 441 616 72
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=AddSubExp
+INPUT: ;letmut<ID>=<INT>;letmut<ID>:i32=<INT>;}#
+
+STEP: 22
+STATUS_STACK:  0 8 17 35 102 259 441 616 735
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Exp
+INPUT: ;letmut<ID>=<INT>;letmut<ID>:i32=<INT>;}#
+
+STEP: 23
+STATUS_STACK:  0 8 17 35 102 259 441 616 735 824
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Exp;
+INPUT: letmut<ID>=<INT>;letmut<ID>:i32=<INT>;}#
+

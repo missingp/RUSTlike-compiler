@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ParserClass</class>
+ <widget class="QMainWindow" name="ParserClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>829</width>
+    <height>614</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Light Compiler Based on LR1 Metod(to be continued)</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="Parser.qrc">
+    <normaloff>:/Parser/picture/icon.png</normaloff>:/Parser/picture/icon.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <property name="styleSheet">
+    <string notr="true">QWidget {
+  background-color: #19232D;
+  border: 0px solid #455364;
+  padding: 0px;
+  color: #E0E1E3;
+  selection-background-color: #346792;
+  selection-color: #E0E1E3;
+}
+
+QWidget:disabled {
+  background-color: #19232D;
+  color: #9DA9B5;
+  selection-background-color: #26486B;
+  selection-color: #9DA9B5;
+}
+
+QWidget::item:selected {
+  background-color: #346792;
+}
+
+QWidget::item:hover:!selected {
+  background-color: #1A72BB;
+}</string>
+   </property>
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>-1</x>
+      <y>-1</y>
+      <width>831</width>
+      <height>351</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QGroupBox {
+	color: rgb(170, 170, 255);
+  font-weight: bold;
+  border: 1px solid #455364;
+  border-radius: 4px;
+  padding: 2px;
+  margin-top: 6px;
+  margin-bottom: 4px;
+}
+
+QGroupBox::title {
+  rgb(255, 255, 255)
+  subcontrol-origin: margin;
+  subcontrol-position: top left;
+  left: 4px;
+  padding-left: 2px;
+  padding-right: 4px;
+  padding-top: -4px;
+}
+
+QGroupBox::indicator {
+  margin-left: 2px;
+  margin-top: 2px;
+  padding: 0;
+  height: 14px;
+  width: 14px;
+}
+</string>
+    </property>
+    <property name="title">
+     <string>代码</string>
+    </property>
+    <widget class="QTextEdit" name="textEdit">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>811</width>
+       <height>311</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Consolas</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QTextEdit {
+  background-color: #FFFFFF;
+  color: #19232D;
+  border-radius: 4px;
+  border: 1px solid #C9CDD0;
+}
+
+QTextEdit:focus {
+  border: 1px solid #73C7FF;
+}
+
+QTextEdit:selected {
+  background: #9FCBFF;
+  color: #C9CDD0;
+}</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_2">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>350</y>
+      <width>821</width>
+      <height>201</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QGroupBox {
+	color: rgb(170, 170, 255);
+  font-weight: bold;
+  border: 1px solid #455364;
+  border-radius: 4px;
+  padding: 2px;
+  margin-top: 6px;
+  margin-bottom: 4px;
+}
+
+QGroupBox::title {
+  rgb(255, 255, 255)
+  subcontrol-origin: margin;
+  subcontrol-position: top left;
+  left: 4px;
+  padding-left: 2px;
+  padding-right: 4px;
+  padding-top: -4px;
+}
+
+QGroupBox::indicator {
+  margin-left: 2px;
+  margin-top: 2px;
+  padding: 0;
+  height: 14px;
+  width: 14px;
+}
+</string>
+    </property>
+    <property name="title">
+     <string>输出</string>
+    </property>
+    <widget class="QTextBrowser" name="textBrowser">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>811</width>
+       <height>161</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>宋体</family>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QTextBrowser {
+	background-color: rgb(255, 255, 255);
+  
+  color: #19232D;
+  border-radius: 4px;
+  border: 1px solid #C9CDD0;
+}</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>829</width>
+     <height>35</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QMenuBar {
+  background-color: #455364;
+  padding: 2px;
+  border: 1px solid #19232D;
+  color: #E0E1E3;
+  selection-background-color: #1A72BB;
+}
+
+QMenuBar:focus {
+  border: 1px solid #346792;
+}
+
+QMenuBar::item {
+  background: transparent;
+  padding: 4px;
+}
+
+QMenuBar::item:selected {
+  padding: 4px;
+  background: transparent;
+  border: 0px solid #455364;
+  background-color: #1A72BB;
+}</string>
+   </property>
+   <widget class="QMenu" name="menu_F">
+    <property name="title">
+     <string>文件(F)</string>
+    </property>
+    <property name="toolTipsVisible">
+     <bool>false</bool>
+    </property>
+    <addaction name="action_Code"/>
+    <addaction name="action_Grammar"/>
+   </widget>
+   <widget class="QMenu" name="menu_W">
+    <property name="title">
+     <string>词法(W)</string>
+    </property>
+    <addaction name="action_Token"/>
+    <addaction name="action_DFA"/>
+   </widget>
+   <widget class="QMenu" name="menu_G">
+    <property name="title">
+     <string>语法(G)</string>
+    </property>
+    <addaction name="action_Table"/>
+    <addaction name="action_Process"/>
+    <addaction name="action_Tree"/>
+    <addaction name="actionLR_1_DFA"/>
+   </widget>
+   <widget class="QMenu" name="menu_C">
+    <property name="title">
+     <string>编译(C)</string>
+    </property>
+    <addaction name="action_Run"/>
+    <addaction name="action_Restart"/>
+   </widget>
+   <widget class="QMenu" name="menu_S">
+    <property name="title">
+     <string>语义(S)</string>
+    </property>
+    <addaction name="action_Quaternion"/>
+   </widget>
+   <addaction name="menu_F"/>
+   <addaction name="menu_W"/>
+   <addaction name="menu_G"/>
+   <addaction name="menu_S"/>
+   <addaction name="menu_C"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="styleSheet">
+    <string notr="true">QStatusBar {
+	color: rgb(255, 255, 255);
+  border: 1px solid #455364;
+  /* Fixes Spyder #9120, #9121 */
+  background: #455364;
+  /* Fixes #205, white vertical borders separating items */
+}
+
+QStatusBar::item {
+  border: none;
+}
+
+QStatusBar QToolTip {
+  background-color: #1A72BB;
+  border: 1px solid #19232D;
+  color: #19232D;
+  /* Remove padding, for fix combo box tooltip */
+  padding: 0px;
+  /* Reducing transparency to read better */
+  opacity: 230;
+}
+
+QStatusBar QLabel {
+  /* Fixes Spyder #9120, #9121 */
+  background: transparent;
+}
+</string>
+   </property>
+  </widget>
+  <action name="action_Code">
+   <property name="text">
+    <string>导入源代码</string>
+   </property>
+  </action>
+  <action name="action_Grammar">
+   <property name="text">
+    <string>导入文法</string>
+   </property>
+  </action>
+  <action name="actionDFA">
+   <property name="text">
+    <string>DFA</string>
+   </property>
+  </action>
+  <action name="action_Token">
+   <property name="text">
+    <string>Token</string>
+   </property>
+  </action>
+  <action name="action_DFA">
+   <property name="text">
+    <string>DFA</string>
+   </property>
+  </action>
+  <action name="action_Table">
+   <property name="text">
+    <string>Action Goto Table</string>
+   </property>
+  </action>
+  <action name="action_Process">
+   <property name="text">
+    <string>归约过程</string>
+   </property>
+  </action>
+  <action name="action_Tree">
+   <property name="text">
+    <string>语法分析树</string>
+   </property>
+  </action>
+  <action name="action_Run">
+   <property name="text">
+    <string>开始编译</string>
+   </property>
+  </action>
+  <action name="action_Restart">
+   <property name="text">
+    <string>重置</string>
+   </property>
+  </action>
+  <action name="actionLR_1_DFA">
+   <property name="text">
+    <string>LR(1)  DFA</string>
+   </property>
+  </action>
+  <action name="action_Quaternion">
+   <property name="text">
+    <string>四元式</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="Parser.qrc"/>
+ </resources>
+ <connections/>
+</ui>
