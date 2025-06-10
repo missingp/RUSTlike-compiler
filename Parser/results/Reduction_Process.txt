@@ -1,150 +1,222 @@
 STEP: 0
 STATUS_STACK:  0
 SYMBOL_STACK: #
-INPUT: fnmain(){leta=10;}#
+INPUT: fnmain(){letmuta=loop{break1;};}#
 
 STEP: 1
-STATUS_STACK:  0 10
+STATUS_STACK:  0 11
 STATUS_SYMBOL: #fn
-INPUT: <ID>(){let<ID>=<INT>;}#
+INPUT: <ID>(){letmut<ID>=loop{break<INT>;};}#
 
 STEP: 2
-STATUS_STACK:  0 10 18
+STATUS_STACK:  0 11 22
 STATUS_SYMBOL: #fn<ID>
-INPUT: (){let<ID>=<INT>;}#
+INPUT: (){letmut<ID>=loop{break<INT>;};}#
 
 STEP: 3
-STATUS_STACK:  0 10 18 63
+STATUS_STACK:  0 11 22 90
 STATUS_SYMBOL: #fn<ID>(
-INPUT: ){let<ID>=<INT>;}#
+INPUT: ){letmut<ID>=loop{break<INT>;};}#
 
 STEP: 4
-STATUS_STACK:  0 10 18 63 208
+STATUS_STACK:  0 11 22 90 257
 STATUS_SYMBOL: #fn<ID>(ParamList
-INPUT: ){let<ID>=<INT>;}#
+INPUT: ){letmut<ID>=loop{break<INT>;};}#
 
 STEP: 5
-STATUS_STACK:  0 10 18 63 208 401
+STATUS_STACK:  0 11 22 90 257 483
 STATUS_SYMBOL: #fn<ID>(ParamList)
-INPUT: {let<ID>=<INT>;}#
+INPUT: {letmut<ID>=loop{break<INT>;};}#
 
 STEP: 6
 STATUS_STACK:  0 8
 STATUS_SYMBOL: #FunHead
-INPUT: {let<ID>=<INT>;}#
+INPUT: {letmut<ID>=loop{break<INT>;};}#
 
 STEP: 7
-STATUS_STACK:  0 8 17
+STATUS_STACK:  0 8 20
 STATUS_SYMBOL: #FunHead{
-INPUT: let<ID>=<INT>;}#
+INPUT: letmut<ID>=loop{break<INT>;};}#
 
 STEP: 8
-STATUS_STACK:  0 8 17 35
+STATUS_STACK:  0 8 20 40
 STATUS_SYMBOL: #FunHead{let
-INPUT: <ID>=<INT>;}#
+INPUT: mut<ID>=loop{break<INT>;};}#
 
 STEP: 9
-STATUS_STACK:  0 8 17 35 13
-STATUS_SYMBOL: #FunHead{let<ID>
-INPUT: =<INT>;}#
+STATUS_STACK:  0 8 20 40 15
+STATUS_SYMBOL: #FunHead{letmut
+INPUT: <ID>=loop{break<INT>;};}#
 
 STEP: 10
-STATUS_STACK:  0 8 17 35 102
-STATUS_SYMBOL: #FunHead{letVarDeclInner
-INPUT: =<INT>;}#
+STATUS_STACK:  0 8 20 40 15 27
+STATUS_SYMBOL: #FunHead{letmut<ID>
+INPUT: =loop{break<INT>;};}#
 
 STEP: 11
-STATUS_STACK:  0 8 17 35 102 260
-STATUS_SYMBOL: #FunHead{letVarDeclInner=
-INPUT: <INT>;}#
+STATUS_STACK:  0 8 20 40 129
+STATUS_SYMBOL: #FunHead{letVarDeclInner
+INPUT: =loop{break<INT>;};}#
 
 STEP: 12
-STATUS_STACK:  0 8 17 35 102 260 87
-STATUS_SYMBOL: #FunHead{letVarDeclInner=<INT>
-INPUT: ;}#
+STATUS_STACK:  0 8 20 40 129 309
+STATUS_SYMBOL: #FunHead{letVarDeclInner=
+INPUT: loop{break<INT>;};}#
 
 STEP: 13
-STATUS_STACK:  0 8 17 35 102 260 82
-STATUS_SYMBOL: #FunHead{letVarDeclInner=Element
-INPUT: ;}#
+STATUS_STACK:  0 8 20 40 129 309 100
+STATUS_SYMBOL: #FunHead{letVarDeclInner=loop
+INPUT: {break<INT>;};}#
 
 STEP: 14
-STATUS_STACK:  0 8 17 35 102 260 81
-STATUS_SYMBOL: #FunHead{letVarDeclInner=Factor
-INPUT: ;}#
+STATUS_STACK:  0 8 20 40 129 309 100 280
+STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m
+INPUT: {break<INT>;};}#
 
 STEP: 15
-STATUS_STACK:  0 8 17 35 102 260 80
-STATUS_SYMBOL: #FunHead{letVarDeclInner=Item
-INPUT: ;}#
+STATUS_STACK:  0 8 20 40 129 309 100 280 503
+STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{
+INPUT: break<INT>;};}#
 
 STEP: 16
-STATUS_STACK:  0 8 17 35 102 260 77
-STATUS_SYMBOL: #FunHead{letVarDeclInner=MulDivExp
-INPUT: ;}#
+STATUS_STACK:  0 8 20 40 129 309 100 280 503 45
+STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{break
+INPUT: <INT>;};}#
 
 STEP: 17
-STATUS_STACK:  0 8 17 35 102 260 72
-STATUS_SYMBOL: #FunHead{letVarDeclInner=AddSubExp
-INPUT: ;}#
+STATUS_STACK:  0 8 20 40 129 309 100 280 503 45 114
+STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{break<INT>
+INPUT: ;};}#
 
 STEP: 18
-STATUS_STACK:  0 8 17 35 102 260 442
+STATUS_STACK:  0 8 20 40 129 309 100 280 503 45 109
+STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{breakElement
+INPUT: ;};}#
+
+STEP: 19
+STATUS_STACK:  0 8 20 40 129 309 100 280 503 45 108
+STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{breakFactor
+INPUT: ;};}#
+
+STEP: 20
+STATUS_STACK:  0 8 20 40 129 309 100 280 503 45 107
+STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{breakItem
+INPUT: ;};}#
+
+STEP: 21
+STATUS_STACK:  0 8 20 40 129 309 100 280 503 45 104
+STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{breakMulDivExp
+INPUT: ;};}#
+
+STEP: 22
+STATUS_STACK:  0 8 20 40 129 309 100 280 503 45 99
+STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{breakAddSubExp
+INPUT: ;};}#
+
+STEP: 23
+STATUS_STACK:  0 8 20 40 129 309 100 280 503 45 132
+STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{breakExp
+INPUT: ;};}#
+
+STEP: 24
+STATUS_STACK:  0 8 20 40 129 309 100 280 503 45 132 311
+STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{breakExp;
+INPUT: };}#
+
+STEP: 25
+STATUS_STACK:  0 8 20 40 129 309 100 280 503 527
+STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{Stmt
+INPUT: };}#
+
+STEP: 26
+STATUS_STACK:  0 8 20 40 129 309 100 280 503 527 118
+STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{StmtStmtList
+INPUT: };}#
+
+STEP: 27
+STATUS_STACK:  0 8 20 40 129 309 100 280 503 282
+STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{StmtList
+INPUT: };}#
+
+STEP: 28
+STATUS_STACK:  0 8 20 40 129 309 100 280 503 282 505
+STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{StmtList}
+INPUT: ;}#
+
+STEP: 29
+STATUS_STACK:  0 8 20 40 129 309 100 280 502
+STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_mBlock
+INPUT: ;}#
+
+STEP: 30
+STATUS_STACK:  0 8 20 40 129 309 102
+STATUS_SYMBOL: #FunHead{letVarDeclInner=LoopStmt
+INPUT: ;}#
+
+STEP: 31
+STATUS_STACK:  0 8 20 40 129 309 524
 STATUS_SYMBOL: #FunHead{letVarDeclInner=Exp
 INPUT: ;}#
 
-STEP: 19
-STATUS_STACK:  0 8 17 35 102 260 442 617
+STEP: 32
+STATUS_STACK:  0 8 20 40 129 309 524 723
 STATUS_SYMBOL: #FunHead{letVarDeclInner=Exp;
 INPUT: }#
 
-STEP: 20
-STATUS_STACK:  0 8 17 24
+STEP: 33
+STATUS_STACK:  0 8 20 34
 STATUS_SYMBOL: #FunHead{VarDeclAssign
 INPUT: }#
 
-STEP: 21
-STATUS_STACK:  0 8 17 28
+STEP: 34
+STATUS_STACK:  0 8 20 30
 STATUS_SYMBOL: #FunHead{Stmt
 INPUT: }#
 
-STEP: 22
-STATUS_STACK:  0 8 17 28 92
+STEP: 35
+STATUS_STACK:  0 8 20 30 118
 STATUS_SYMBOL: #FunHead{StmtStmtList
 INPUT: }#
 
-STEP: 23
-STATUS_STACK:  0 8 17 23
+STEP: 36
+STATUS_STACK:  0 8 20 28
 STATUS_SYMBOL: #FunHead{StmtList
 INPUT: }#
 
-STEP: 24
-STATUS_STACK:  0 8 17 23 90
+STEP: 37
+STATUS_STACK:  0 8 20 28 117
 STATUS_SYMBOL: #FunHead{StmtList}
 INPUT: #
 
-STEP: 25
-STATUS_STACK:  0 8 15
+STEP: 38
+STATUS_STACK:  0 8 18
 STATUS_SYMBOL: #FunHeadBlock
 INPUT: #
 
-STEP: 26
+STEP: 39
 STATUS_STACK:  0 4
 STATUS_SYMBOL: #FunDef
 INPUT: #
 
-STEP: 27
+STEP: 40
 STATUS_STACK:  0 2
 STATUS_SYMBOL: #Decl
 INPUT: #
 
-STEP: 28
-STATUS_STACK:  0 2 14
+STEP: 41
+STATUS_STACK:  0 2 17
 STATUS_SYMBOL: #DeclDeclList
 INPUT: #
 
-STEP: 29
+STEP: 42
 STATUS_STACK:  0 5
 STATUS_SYMBOL: #DeclList
 INPUT: #
 
+STEP: 43
+STATUS_STACK:  0 3
+STATUS_SYMBOL: #Program
+INPUT: #
+
+
+Parse successfully!

@@ -58,12 +58,13 @@ AssignStmt ::= Assignable = Exp ;
 $ 变量声明赋值语句
 VarDeclAssign ::= let VarDeclInner : Type = Exp ;
 VarDeclAssign ::= let VarDeclInner = Exp ;
+VarDeclAssign ::= VarDeclInner in Exp
 VarDeclAssign ::= abc
 
 $ 变量声明
 VarDecl ::= let VarDeclInner ;
 VarDecl ::= let VarDeclInner : Type ;
-VarDeclInner ::= mut <ID> | <ID>
+VarDeclInner ::= mut <ID> | <ID> 
 
 $ 返回语句
 ReturnStmt ::= return ;
@@ -88,17 +89,33 @@ $ 新增实参列表规则
 ArgList ::= @ | Exp | Exp , ArgList
 
 $ 新增选择结构规则
-IfStmt ::= if Exp Block ElsePart
-ElsePart ::= @ | else Block | else if Exp Block ElsePart 
+$ IfStmt ::= if Exp Block ElsePart
+$ ElsePart ::= @ | else Block | else if Exp Block ElsePart 
+
+IfStmt ::= if IfStmt_m1  Exp  IfStmt_m2 Block IfNext 
+IfStmt_m1 ::= @
+IfStmt_m2 ::= @
+IfNext ::= @ | IfStmt_next else Block | IfStmt_next else if IfStmt_m1  Exp  IfStmt_m2 Block IfNext 
+IfStmt_next ::= @
+
 
 $ 新增循环结构规则
-WhileStmt ::= while Exp Block
-ForStmt ::= for VarDeclInner in Iterable Block
+WhileStmt ::= while WhileStmt_m1  Exp  WhileStmt_m2 Block
+WhileStmt_m1 ::= @
+WhileStmt_m2 ::= @
 
-$此处有问题，识别不了..后序再改
-Iterable ::= Exp .. Exp
 
-LoopStmt ::= loop Block
+$ ForStmt ::= for VarDeclAssign .. Exp Block
+
+ForStmt ::= for ForStmt_m1 VarDeclAssign .. Exp ForStmt_m2 Block
+ForStmt_m1 ::= @
+ForStmt_m2 ::= @
+
+$ 此处有问题，识别不了..后序再改
+$ Iterable ::= Exp .. Exp
+
+LoopStmt ::= loop LoopStmt_m Block
+LoopStmt_m ::= @
 
 $ break 语句定义
 BreakStmt ::= break ;

@@ -39,26 +39,26 @@ i32: first set: {i32 }
 <INT>: first set: {<INT> }
 &: first set: {& }
 #: first set: {# }
-S: first set: {@ fn let }
-Program: first set: {@ fn let }
-DeclList: first set: {@ fn let }
+S: first set: {@ fn let mut <ID> }
+Program: first set: {@ fn let mut <ID> }
+DeclList: first set: {@ fn let mut <ID> }
 Type: first set: {( [ i32 & }
 TupleTypeInner: first set: {@ ( [ i32 & }
 Assignable: first set: {* ( [ <ID> <INT> & }
 Element: first set: {* ( [ <ID> <INT> & }
 Exp: first set: {if loop * ( { [ <ID> <INT> & }
 Factor: first set: {* ( [ <ID> <INT> & }
-Decl: first set: {fn let }
+Decl: first set: {fn let mut <ID> }
 FunDef: first set: {fn }
 VarDecl: first set: {let }
-VarDeclAssign: first set: {let }
+VarDeclAssign: first set: {let mut <ID> }
 FunHead: first set: {fn }
 Block: first set: {{ }
 ParamList: first set: {@ mut <ID> }
 Param: first set: {mut <ID> }
 VarMut: first set: {@ mut }
-StmtList: first set: {@ let return if while for loop break continue * ( { [ ; <ID> <INT> & }
-Stmt: first set: {let return if while for loop break continue * ( { [ ; <ID> <INT> & }
+StmtList: first set: {@ let mut return if while for loop break continue * ( { [ ; <ID> <INT> & }
+Stmt: first set: {let mut return if while for loop break continue * ( { [ ; <ID> <INT> & }
 AssignStmt: first set: {* ( [ <ID> <INT> & }
 ReturnStmt: first set: {return }
 IfStmt: first set: {if }
@@ -81,9 +81,16 @@ ArrayElementList: first set: {@ if loop * ( { [ <ID> <INT> & }
 TupleAssignInner: first set: {@ if loop * ( { [ <ID> <INT> & }
 ArgList: first set: {@ if loop * ( { [ <ID> <INT> & }
 ArrayElement: first set: {if loop * ( { [ <ID> <INT> & }
-ElsePart: first set: {@ else }
-Iterable: first set: {if loop * ( { [ <ID> <INT> & }
-FuncExpStmtSeq: first set: {let return if while for loop break continue * ( { [ ; <ID> <INT> & }
+IfStmt_m1: first set: {@ }
+IfStmt_m2: first set: {@ }
+IfNext: first set: {@ else }
+IfStmt_next: first set: {@ }
+WhileStmt_m1: first set: {@ }
+WhileStmt_m2: first set: {@ }
+ForStmt_m1: first set: {@ }
+ForStmt_m2: first set: {@ }
+LoopStmt_m: first set: {@ }
+FuncExpStmtSeq: first set: {let mut return if while for loop break continue * ( { [ ; <ID> <INT> & }
 Param,: first set: {}
 TypeList: first set: {@ ( [ i32 & }
 TupleElementList: first set: {@ if loop * ( { [ <ID> <INT> & }
