@@ -89,12 +89,14 @@ SemanticAnalysis::SemanticAnalysis()
 	translationMap["IfStmt_next"] = &SemanticAnalysis::TranslateIfStmt_next;
 	translationMap["FunDec"] = &SemanticAnalysis::TranslateFunDec;
 	translationMap["FunHead"] = &SemanticAnalysis::TranslateFunHead;
+	translationMap["FunHead"] = &SemanticAnalysis::TranslateFunHead;
 	translationMap["ParamDec"] = &SemanticAnalysis::TranslateParamDec;
 	translationMap["Block"] = &SemanticAnalysis::TranslateBlock;
 	translationMap["Def"] = &SemanticAnalysis::TranslateDef;
 	translationMap["WhileStmt"] = &SemanticAnalysis::TranslateWhileStmt;
 	translationMap["WhileStmt_m1"] = &SemanticAnalysis::TranslateWhileStmt_m1;
 	translationMap["WhileStmt_m2"] = &SemanticAnalysis::TranslateWhileStmt_m2;
+	translationMap["VarDeclAssign"] = &SemanticAnalysis::TranslateVarDeclAssign;
 	translationMap["VarDeclAssign"] = &SemanticAnalysis::TranslateVarDeclAssign;
 	translationMap["Exp"] = &SemanticAnalysis::TranslateExp;
 	translationMap["AddSubExp"] = &SemanticAnalysis::TranslateAddSubExp;
@@ -203,12 +205,16 @@ int SemanticAnalysis::CheckParNum(SemanticSymbol check, int* value)
  * @return  无
  */
 int SemanticAnalysis::ProcessError(SemanticSymbol identifier, int* tb_index, int* tb_index_index, ErrorProcess type, int pos)
+int SemanticAnalysis::ProcessError(SemanticSymbol identifier, int* tb_index, int* tb_index_index, ErrorProcess type, int pos)
 {
 	fstream ferr(SEMANTIC_ERROR_FILE, ios::out);
 	if (!ferr.is_open()) {
 		//文件无法打开
+		//文件无法打开
 		return SEMANTIC_ERROR_FILE_NOT_OPEN;
 	}
+
+
 
 
 	if (type == UNDEFINED_IDENTIFIER) {
@@ -241,13 +247,37 @@ int SemanticAnalysis::ProcessError(SemanticSymbol identifier, int* tb_index, int
 			return SEMANTIC_ERROR_REDEFINED;
 		}
 	}
+	else if (type == INVALID_PARAMETER_COUNT)
+	{
+		int res = CheckParNum(identifier, tb_index);
+		if (res != 0)
+		{
+			string error_msg = res == 2 ? "过多" : "过少";
+			ferr << "语义分析中发生错误：函数调用参数" << error_msg
+				<< "，出错函数名为 " << identifier.value << ",位于第" << pos << "行" << endl;
+			return SEMANTIC_ERROR_PARAMETER_NUM;
+		}
+	}
+	else if (type == FUNCTION_REDEFINED || type == PARAMETER_REDEFINED || type == IDENTIFIER_REDEFINED)
+	{
+		SemanticSymbolTable table = type == FUNCTION_REDEFINED ? symbolTables[0] : symbolTables[*tb_index];
+		if (table.FindSymbol(identifier.value) != -1)
+		{
+			string error_type = (type == FUNCTION_REDEFINED) ? "函数" : (type == PARAMETER_REDEFINED) ? "函数参数"
+				: "变量";
+			ferr << "语义分析中发生错误：" << error_type << identifier.value << "重定义, 位于第" << pos << "行" << endl;
+			return SEMANTIC_ERROR_REDEFINED;
+		}
+	}
 	else if (type == MAIN_FUNCTION_MISSING)
 
 	{
 		ferr << "语义分析中发生错误：main函数未定义" << "，位于第" << pos << "行" << endl;
+		ferr << "语义分析中发生错误：main函数未定义" << "，位于第" << pos << "行" << endl;
 		return SEMANTIC_ERROR_MAIN_UNDEFINED;
 	}
 	else if (type == NO_RETURN) {
+		ferr << "没有返回值, 位于第" << pos << "行" << endl;
 		ferr << "没有返回值, 位于第" << pos << "行" << endl;
 		return SEMANTIC_ERROR_NO_RETURN;
 	}
@@ -282,7 +312,14 @@ void SemanticAnalysis::PopSymbolList(int cnt)
  * @return  无
  */
 int SemanticAnalysis::Analysis(const string production_left, const vector<string> production_right, int pos)
+int SemanticAnalysis::Analysis(const string production_left, const vector<string> production_right, int pos)
 {
+	cout << production_left << " | ";
+	for (int i = 0; i < production_right.size(); i++)
+	{
+		cout << production_right[i] << " ";
+	}
+	cout << endl <<"------------------------------" << endl;
 	cout << production_left << " | ";
 	for (int i = 0; i < production_right.size(); i++)
 	{
@@ -292,9 +329,11 @@ int SemanticAnalysis::Analysis(const string production_left, const vector<string
 	auto it = translationMap.find(production_left);
 	//cout << 444;
 	int res = 1;
+	int res = 1;
 	if (it != translationMap.end())
 	{
 		// 调用相应的翻译函数
+		res = (this->*(it->second))(production_left, production_right, pos);
 		res = (this->*(it->second))(production_left, production_right, pos);
 	}
 	else
@@ -341,9 +380,11 @@ int SemanticAnalysis::PrintQuaternion(const string file_path)
  * @return  无
  */
 int SemanticAnalysis::TranslateProgram(const string production_left, const vector<string> production_right, int pos)
+int SemanticAnalysis::TranslateProgram(const string production_left, const vector<string> production_right, int pos)
 {
 	int res = 1;
 	if (mainFunctionIndex == -1)
+		res = ProcessError({ "", "", -1, -1 }, nullptr, nullptr, MAIN_FUNCTION_MISSING, pos);
 		res = ProcessError({ "", "", -1, -1 }, nullptr, nullptr, MAIN_FUNCTION_MISSING, pos);
 
 	// 插入初始跳转四元式
@@ -368,6 +409,7 @@ int SemanticAnalysis::TranslateProgram(const string production_left, const vecto
 int SemanticAnalysis::TranslateExtDef(const string production_left, const vector<string> production_right, int pos)
 {
 	int res = 1;
+	int res = 1;
 	if (production_right.back() == ";") // 变量定义
 	{
 		// 获取变量名和类型
@@ -375,6 +417,7 @@ int SemanticAnalysis::TranslateExtDef(const string production_left, const vector
 		SemanticSymbol varType = symbolList[symbolList.size() - 3];
 
 		// 处理可能的重定义错误
+		res = ProcessError(varName, &(scopeStack.back()), nullptr, IDENTIFIER_REDEFINED, pos);
 		res = ProcessError(varName, &(scopeStack.back()), nullptr, IDENTIFIER_REDEFINED, pos);
 
 		// 之前没有定义，添加变量到符号表
@@ -467,9 +510,11 @@ int SemanticAnalysis::TranslateFunDec(const string production_left, const vector
  * @return  无
  */
 int SemanticAnalysis::TranslateFunHead(const string production_left, const vector<string> production_right, int pos)
+int SemanticAnalysis::TranslateFunHead(const string production_left, const vector<string> production_right, int pos)
 {
 	int res = 1;
 	// 创建函数表：funcName函数名，funcPara函数参数
+	SemanticSymbol funcName = symbolList[symbolList.size() - 4];
 	SemanticSymbol funcName = symbolList[symbolList.size() - 4];
 	SemanticSymbol funcPara = symbolList[symbolList.size() - 2];
 	SemanticSymbol funType = symbolList[symbolList.size() - 1];
@@ -486,6 +531,7 @@ int SemanticAnalysis::TranslateFunHead(const string production_left, const vecto
 	
 
 	// 判断函数名是否重定义
+	res = ProcessError(funcName, nullptr, nullptr, FUNCTION_REDEFINED, pos);
 	res = ProcessError(funcName, nullptr, nullptr, FUNCTION_REDEFINED, pos);
 
 	// 在全局符号表创建当前函数的符号项（这里参数个数和入口地址会进行回填）
@@ -533,7 +579,9 @@ int SemanticAnalysis::TranslateParamDec(const string production_left, const vect
 	SemanticSymbol type = symbolList[symbolList.size() - 2];
 
 	SemanticSymbolTable& function_table = symbolTables[scopeStack.back()];
+	SemanticSymbolTable& function_table = symbolTables[scopeStack.back()];
 
+	res = ProcessError(name, &(scopeStack.back()), nullptr, PARAMETER_REDEFINED, pos);
 	res = ProcessError(name, &(scopeStack.back()), nullptr, PARAMETER_REDEFINED, pos);
 
 	int new_position = function_table.InsertSymbol({ IdentifierInfo::Variable, type.value, name.value, -1, -1, -1 });
@@ -580,6 +628,7 @@ int SemanticAnalysis::TranslateDef(const string production_left, const vector<st
 	SemanticSymbolTable& current_table = symbolTables[scopeStack.back()];
 
 	res = ProcessError(name, &(scopeStack.back()), nullptr, IDENTIFIER_REDEFINED, pos);
+	res = ProcessError(name, &(scopeStack.back()), nullptr, IDENTIFIER_REDEFINED, pos);
 
 	current_table.InsertSymbol({ IdentifierInfo::Variable, type.value, name.value, -1, -1, -1 });
 
@@ -598,6 +647,7 @@ int SemanticAnalysis::TranslateDef(const string production_left, const vector<st
  * @ term   AssignStmt ::= <ID> = Exp
  */
 int SemanticAnalysis::TranslateVarDeclAssign(const string production_left, const vector<string> production_right, int pos)
+int SemanticAnalysis::TranslateVarDeclAssign(const string production_left, const vector<string> production_right, int pos)
 {
 	int res = 1;
 	SemanticSymbol exp = symbolList[symbolList.size() - 2];
@@ -613,6 +663,7 @@ int SemanticAnalysis::TranslateVarDeclAssign(const string production_left, const
 	}
 	// 检查标识符是否已定义
 	int tbIndex = -1, tbIndexIndex = -1;
+	res = ProcessError(idtf, &tbIndex, &tbIndexIndex, UNDEFINED_IDENTIFIER, pos);
 	res = ProcessError(idtf, &tbIndex, &tbIndexIndex, UNDEFINED_IDENTIFIER, pos);
 
 	quaternionList.emplace_back(nextQuaternionIndex++, "=", exp.value, "-", idtf.value);
@@ -733,6 +784,7 @@ int SemanticAnalysis::TranslateItem(const string production_left, const vector<s
 int SemanticAnalysis::TranslateFactor(const string production_left, const vector<string> production_right, int pos)
 {
 #if 0
+#if 0
 	int res = 1;
 	if (production_right.size() == 1)
 	{
@@ -740,6 +792,7 @@ int SemanticAnalysis::TranslateFactor(const string production_left, const vector
 		if ("<ID>" == production_right[0])
 		{
 			int tb_index = -1, tb_index_index = -1;
+			res = ProcessError(exp, &tb_index, &tb_index_index, UNDEFINED_IDENTIFIER, pos);
 			res = ProcessError(exp, &tb_index, &tb_index_index, UNDEFINED_IDENTIFIER, pos);
 		}
 		PopSymbolList(production_right.size());
@@ -750,6 +803,78 @@ int SemanticAnalysis::TranslateFactor(const string production_left, const vector
 		SemanticSymbol  exp = symbolList[symbolList.size() - 2];
 		PopSymbolList(production_right.size());
 		symbolList.emplace_back(production_left, exp.value, exp.tableIndex, exp.symbolIndex);
+	}
+	return res;
+#endif
+	 int res = 1;
+    int rightSize = production_right.size();
+
+    // Factor -> Element
+    if (rightSize == 1 && production_right[0] == "Element") {
+        SemanticSymbol element = symbolList.back();
+        PopSymbolList(1);
+        symbolList.emplace_back(production_left, element.value, element.tableIndex, element.symbolIndex);
+    }
+    
+    // Factor -> * Factor (解引用)
+    else if (rightSize == 2 && production_right[0] == "*") {
+        SemanticSymbol factor = symbolList.back();
+        string tempVar = "T" + to_string(tempVarCounter++);
+        
+        // 生成解引用四元式
+        quaternionList.emplace_back(nextQuaternionIndex++, "deref", factor.value, "-", tempVar);
+        
+        PopSymbolList(2);
+        symbolList.emplace_back(production_left, tempVar, -1, -1);
+    }
+    
+    // Factor -> & mut Factor (可变引用)
+    else if (rightSize == 3 && production_right[0] == "&" && production_right[1] == "mut") {
+        SemanticSymbol factor = symbolList.back();
+        string tempVar = "T" + to_string(tempVarCounter++);
+        
+        // 生成可变引用四元式
+        quaternionList.emplace_back(nextQuaternionIndex++, "ref_mut", factor.value, "-", tempVar);
+        
+        PopSymbolList(3);
+        symbolList.emplace_back(production_left, tempVar, -1, -1);
+    }
+    
+    // Factor -> & Factor (不可变引用)
+    else if (rightSize == 2 && production_right[0] == "&") {
+        SemanticSymbol factor = symbolList.back();
+        string tempVar = "T" + to_string(tempVarCounter++);
+        
+        // 生成不可变引用四元式
+        quaternionList.emplace_back(nextQuaternionIndex++, "ref", factor.value, "-", tempVar);
+        
+        PopSymbolList(2);
+        symbolList.emplace_back(production_left, tempVar, -1, -1);
+    }
+    
+    // Factor -> [ ArrayElementList ] (数组)
+    else if (rightSize == 3 && production_right[0] == "[" && production_right[2] == "]") {
+        SemanticSymbol arrayList = symbolList[symbolList.size() - 2];
+        string tempVar = "T" + to_string(tempVarCounter++);
+        
+        // 生成数组创建四元式
+        quaternionList.emplace_back(nextQuaternionIndex++, "array", arrayList.value, "-", tempVar);
+        
+        PopSymbolList(3);
+        symbolList.emplace_back(production_left, tempVar, -1, -1);
+    }
+    
+    // Factor -> ( TupleAssignInner ) (元组)
+    else if (rightSize == 3 && production_right[0] == "(" && production_right[2] == ")") {
+        SemanticSymbol tupleInner = symbolList[symbolList.size() - 2];
+        string tempVar = "T" + to_string(tempVarCounter++);
+        
+        // 生成元组创建四元式
+        quaternionList.emplace_back(nextQuaternionIndex++, "tuple", tupleInner.value, "-", tempVar);
+        
+        PopSymbolList(3);
+        symbolList.emplace_back(production_left, tempVar, -1, -1);
+    }
 	}
 	return res;
 #endif
@@ -844,6 +969,7 @@ int SemanticAnalysis::TranslateCallStmt(const string production_left, const vect
 	int argCount = stoi(args.value);
 	int dummy = -1;
 	res = ProcessError(check, &argCount, &dummy, INVALID_PARAMETER_COUNT, pos);
+	res = ProcessError(check, &argCount, &dummy, INVALID_PARAMETER_COUNT, pos);
 
 	string tempVar = "T" + to_string(tempVarCounter++);
 	quaternionList.emplace_back(nextQuaternionIndex++, "call", functionId.value, "-", tempVar);
@@ -872,6 +998,7 @@ int SemanticAnalysis::TranslateCallFunCheck(const string production_left, const 
 		//cout << "未定义的函数名" << endl;
 		//throw(SEMANTIC_ERROR_UNDEFINED);
 		int invalid = 0;
+		res = ProcessError(functionId, &invalid, &invalid, CALL_FUNCTION_UNDIFINED, pos);
 		res = ProcessError(functionId, &invalid, &invalid, CALL_FUNCTION_UNDIFINED, pos);
 	}
 	else if (symbolTables[0].symbols[functionPosition].category != IdentifierInfo::Function)
@@ -952,9 +1079,11 @@ int SemanticAnalysis::TranslateReturnStmt(const string production_left, const ve
 			//cout << "缺少返回值" << endl;
 			int invalid = 0;
 			res = ProcessError(symbolList[0], &invalid, &invalid, NO_RETURN, pos);
+			res = ProcessError(symbolList[0], &invalid, &invalid, NO_RETURN, pos);
 		}
 		PopSymbolList(right_size);
 		quaternionList.push_back({ nextQuaternionIndex++, "return", "-", "-", symbol_table.tableName });
+		symbolList.push_back({ production_left, "", -1, -1 });
 		symbolList.push_back({ production_left, "", -1, -1 });
 	}
 	else
@@ -1140,6 +1269,7 @@ int SemanticAnalysis::TranslateIfStmt_m2(const string production_left, const vec
 
 	quaternionList.push_back({ nextQuaternionIndex++, "j=", expression.value, "0", "" });
 	backpatchingList.push_back(quaternionList.size() - 1);
+
 
 
 	quaternionList.push_back({ nextQuaternionIndex++, "j=", "-", "-", to_string(nextQuaternionIndex) });

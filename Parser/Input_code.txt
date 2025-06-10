@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 fn main() { 
     let mut a=loop { 
         break 1; 
     }; 
+=======
+fn main() -> i32 { 
+    return 1; 
+>>>>>>> 2d1a0f3fbfd34ac550cdc735f7ab7a605e9d8e67
 } 

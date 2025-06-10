@@ -126,6 +126,7 @@ class SemanticAnalysis
 private:
 	// 定义函数指针类型
 	using TranslationFunction = int (SemanticAnalysis::*)(const string, const vector<string>, int pos);
+	using TranslationFunction = int (SemanticAnalysis::*)(const string, const vector<string>, int pos);
 
 	// 创建一个从产生式左部到处理函数的映射表
 	unordered_map<string, TranslationFunction> translationMap;
@@ -151,11 +152,13 @@ public:
 	void AddSymbolToList(const SemanticSymbol symbol);
 	// 分析过程
 	int Analysis(const string production_left, const vector<string> production_right, int pos);
+	int Analysis(const string production_left, const vector<string> production_right, int pos);
 	// 打印四元式表
 	int PrintQuaternion(const string file_path);
 	//=====================tool======================================
 	bool CheckIdDefine(SemanticSymbol identifier, int* tb_index, int* tb_index_index);
 	int CheckParNum(SemanticSymbol check, int* value);
+	int ProcessError(SemanticSymbol identifier, int* tb_index, int* tb_index_index, ErrorProcess type, int pos);
 	int ProcessError(SemanticSymbol identifier, int* tb_index, int* tb_index_index, ErrorProcess type, int pos);
 	void PopSymbolList(int count);
 
@@ -170,8 +173,19 @@ private:
 	int TranslateIfStmt_m2(const string production_left, const vector<string> production_right, int pos);
 	int TranslateIfNext(const string production_left, const vector<string> production_right, int pos);
 	int TranslateIfStmt_next(const string production_left, const vector<string> production_right, int pos);
+	int TranslateProgram(const string production_left, const vector<string> production_right, int pos);
+	int TranslateExtDef(const string production_left, const vector<string> production_right, int pos);
+	int TranslateVarSpecifier(const string production_left, const vector<string> production_right, int pos);
+	int TranslateFunSpecifier(const string production_left, const vector<string> production_right, int pos);
+	int TranslateIfStmt(const string production_left, const vector<string> production_right, int pos);
+	int TranslateIfStmt_m1(const string production_left, const vector<string> production_right, int pos);
+	int TranslateIfStmt_m2(const string production_left, const vector<string> production_right, int pos);
+	int TranslateIfNext(const string production_left, const vector<string> production_right, int pos);
+	int TranslateIfStmt_next(const string production_left, const vector<string> production_right, int pos);
 
 	//===============================================================
+	int TranslateFunDec(const string production_left, const vector<string> production_right, int pos);
+	int TranslateFunHead(const string production_left, const vector<string> production_right, int pos);
 	int TranslateFunDec(const string production_left, const vector<string> production_right, int pos);
 	int TranslateFunHead(const string production_left, const vector<string> production_right, int pos);
 	int TranslateParamDec(const string production_left, const vector<string> production_right, int pos);
@@ -182,6 +196,7 @@ private:
 	int TranslateWhileStmt_m2(const string production_left, const vector<string> production_right, int pos);
 
 	//==============================================================
+	int TranslateVarDeclAssign(const string production_left, const vector<string> production_right, int pos);
 	int TranslateVarDeclAssign(const string production_left, const vector<string> production_right, int pos);
 	int TranslateExp(const string production_left, const vector<string> production_right, int pos);
 	int TranslateAddSubExp(const string production_left, const vector<string> production_right, int pos);
