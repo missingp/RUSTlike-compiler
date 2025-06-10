@@ -204,7 +204,7 @@ int SemanticAnalysis::CheckParNum(SemanticSymbol check, int* value)
  * @param： ErrorProcess type 错误类型。
  * @return  无
  */
-int SemanticAnalysis::ProcessError(SemanticSymbol identifier, int* tb_index, int* tb_index_index, ErrorProcess type, int pos)
+// int SemanticAnalysis::ProcessError(SemanticSymbol identifier, int* tb_index, int* tb_index_index, ErrorProcess type, int pos)
 int SemanticAnalysis::ProcessError(SemanticSymbol identifier, int* tb_index, int* tb_index_index, ErrorProcess type, int pos)
 {
 	fstream ferr(SEMANTIC_ERROR_FILE, ios::out);
@@ -311,7 +311,7 @@ void SemanticAnalysis::PopSymbolList(int cnt)
  * @param： const vector<string> production_right 产生式的右部，提供翻译所需的具体元素。
  * @return  无
  */
-int SemanticAnalysis::Analysis(const string production_left, const vector<string> production_right, int pos)
+// int SemanticAnalysis::Analysis(const string production_left, const vector<string> production_right, int pos)
 int SemanticAnalysis::Analysis(const string production_left, const vector<string> production_right, int pos)
 {
 	cout << production_left << " | ";
@@ -379,7 +379,7 @@ int SemanticAnalysis::PrintQuaternion(const string file_path)
  * @param： const vector<string> production_right 产生式的右部，包含具体的语法单元。
  * @return  无
  */
-int SemanticAnalysis::TranslateProgram(const string production_left, const vector<string> production_right, int pos)
+// int SemanticAnalysis::TranslateProgram(const string production_left, const vector<string> production_right, int pos)
 int SemanticAnalysis::TranslateProgram(const string production_left, const vector<string> production_right, int pos)
 {
 	int res = 1;
@@ -509,7 +509,7 @@ int SemanticAnalysis::TranslateFunDec(const string production_left, const vector
  * @param： const vector<string> production_right 产生式的右部，包含具体的语法单元。
  * @return  无
  */
-int SemanticAnalysis::TranslateFunHead(const string production_left, const vector<string> production_right, int pos)
+// int SemanticAnalysis::TranslateFunHead(const string production_left, const vector<string> production_right, int pos)
 int SemanticAnalysis::TranslateFunHead(const string production_left, const vector<string> production_right, int pos)
 {
 	int res = 1;
@@ -646,7 +646,7 @@ int SemanticAnalysis::TranslateDef(const string production_left, const vector<st
  * @return  无
  * @ term   AssignStmt ::= <ID> = Exp
  */
-int SemanticAnalysis::TranslateVarDeclAssign(const string production_left, const vector<string> production_right, int pos)
+// int SemanticAnalysis::TranslateVarDeclAssign(const string production_left, const vector<string> production_right, int pos)
 int SemanticAnalysis::TranslateVarDeclAssign(const string production_left, const vector<string> production_right, int pos)
 {
 	int res = 1;
