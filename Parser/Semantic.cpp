@@ -124,6 +124,14 @@ SemanticAnalysis::SemanticAnalysis()
 	translationMap["ForStmt"] = &SemanticAnalysis::TranslateForStmt; 
 	translationMap["ForStmt_m1"] = &SemanticAnalysis::TranslateForStmt_m1;
 	translationMap["ForStmt_m2"] = &SemanticAnalysis::TranslateForStmt_m2;
+	translationMap["FuncExpStmtBlock"] = &SemanticAnalysis::TranslateFuncExpStmtBlock;
+	translationMap["FuncExpStmtSeq"] = &SemanticAnalysis::TranslateFuncExpStmtSeq;
+	translationMap["Stmt"] = &SemanticAnalysis::TranslateStmt;
+	translationMap["VarDecl"] = &SemanticAnalysis::TranslateVarDecl;
+	translationMap["ArrayElement"] = &SemanticAnalysis::TranslateArrayElement;
+	translationMap["ArrayElementList"] = &SemanticAnalysis::TranslateArrayElementList;
+
+	
 	// 创建全局的符号表
 	symbolTables.push_back(SemanticSymbolTable(SemanticSymbolTable::GlobalTable, "global table"));
 	// 当前作用域为全局作用域
@@ -615,7 +623,21 @@ int SemanticAnalysis::TranslateVarDeclAssign(const string production_left, const
 	int tbIndex = -1, tbIndexIndex = -1;
 	res = ProcessError(idtf, &tbIndex, &tbIndexIndex, UNDEFINED_IDENTIFIER, pos);
 
-	quaternionList.emplace_back(nextQuaternionIndex++, "=", exp.value, "-", idtf.value);
+	if (exp.value == "array")
+	{
+		while (arrayInitList.size() > 0)
+		{
+			quaternionList[arrayInitList.back()].result = idtf.value;
+			arrayInitList.pop_back();
+		}
+	}
+	else
+	{
+		quaternionList.emplace_back(nextQuaternionIndex++, "=", exp.value, "-", idtf.value);
+	}
+	
+
+
 
 	// 更新符号流
 	PopSymbolList(production_right.size());
@@ -623,6 +645,32 @@ int SemanticAnalysis::TranslateVarDeclAssign(const string production_left, const
 	symbolList[symbolList.size()-1].ext = exp.value;
 	return res;
 }
+
+
+int SemanticAnalysis::TranslateVarDecl(const string production_left, const vector<string> production_right, int pos)
+{
+	int res = 1;
+	SemanticSymbol type = symbolList[symbolList.size() - 2];
+	SemanticSymbol var = symbolList[symbolList.size() - 4];
+
+	int tbIndex = -1, tbIndexIndex = -1;
+	res = ProcessError(var, &tbIndex, &tbIndexIndex, UNDEFINED_IDENTIFIER, pos);
+
+	if (array_def_pos != -1)
+	{
+		quaternionList[array_def_pos].result = var.value;
+		array_def_pos = -1;
+	}
+		
+
+	// 更新符号流
+	PopSymbolList(production_right.size());
+	symbolList.emplace_back(production_left, var.value, tbIndex, tbIndexIndex);
+	return res;
+}
+
+
+
 
 /**
  * @brief： 翻译表达式。
@@ -640,6 +688,7 @@ int SemanticAnalysis::TranslateExp(const string production_left, const vector<st
 		SemanticSymbol add_sub_exp = symbolList.back();
 		PopSymbolList(1);
 		symbolList.emplace_back(production_left, add_sub_exp.value, add_sub_exp.tableIndex, add_sub_exp.symbolIndex);
+		symbolList.back().ext = add_sub_exp.ext; // 保留额外信息
 	}
 	else
 	{
@@ -675,6 +724,7 @@ int SemanticAnalysis::TranslateAddSubExp(const string production_left, const vec
 		SemanticSymbol add_sub_exp = symbolList.back();
 		PopSymbolList(1);
 		symbolList.emplace_back(production_left, add_sub_exp.value, add_sub_exp.tableIndex, add_sub_exp.symbolIndex);
+		symbolList.back().ext = add_sub_exp.ext; // 保留额外信息
 	}
 	else
 	{
@@ -706,6 +756,12 @@ int SemanticAnalysis::TranslateItem(const string production_left, const vector<s
 		SemanticSymbol item_exp = symbolList.back();
 		PopSymbolList(1);
 		symbolList.emplace_back(production_left, item_exp.value, item_exp.tableIndex, item_exp.symbolIndex);
+		symbolList.back().ext = item_exp.ext; // 保留额外信息
+	}
+	else if (production_right.size() == 3 && production_right[0] == "[" && production_right.back() == "]")
+	{
+		PopSymbolList(production_right.size());
+		symbolList.emplace_back(production_left, "array", -1, -1);
 	}
 	else {
 
@@ -761,6 +817,7 @@ int SemanticAnalysis::TranslateFactor(const string production_left, const vector
         SemanticSymbol element = symbolList.back();
         PopSymbolList(1);
         symbolList.emplace_back(production_left, element.value, element.tableIndex, element.symbolIndex);
+		symbolList.back().ext = element.ext; // 保留额外信息
     }
     
     // Factor -> * Factor (解引用)
@@ -801,14 +858,15 @@ int SemanticAnalysis::TranslateFactor(const string production_left, const vector
     
     // Factor -> [ ArrayElementList ] (数组)
     else if (rightSize == 3 && production_right[0] == "[" && production_right[2] == "]") {
-        SemanticSymbol arrayList = symbolList[symbolList.size() - 2];
-        string tempVar = "T" + to_string(tempVarCounter++);
+     /*   SemanticSymbol arrayList = symbolList[symbolList.size() - 2];
+
+        string tempVar = "T" + to_string(tempVarCounter++);*/
         
         // 生成数组创建四元式
-        quaternionList.emplace_back(nextQuaternionIndex++, "array", arrayList.value, "-", tempVar);
+        //quaternionList.emplace_back(nextQuaternionIndex++, "array", arrayList.value, "-", tempVar);
         
         PopSymbolList(3);
-        symbolList.emplace_back(production_left, tempVar, -1, -1);
+        symbolList.emplace_back(production_left, "array", -1, -1);
     }
     
     // Factor -> ( TupleAssignInner ) (元组)
@@ -1026,10 +1084,17 @@ int SemanticAnalysis::TranslateIfStmt(const string production_left, const vector
 		quaternionList[backpatchingList.back()].result = IfNext.value;
 		backpatchingList.pop_back();
 	}
+	string ret;
+	//读回exp
+	while (expList.size() > 0)
+	{
+		ret = quaternionList[expList.back()].result;
+		expList.pop_back();
+	}
 
 	// 修改symbol list
 	PopSymbolList(production_right.size());
-	symbolList.push_back({ production_left, "", -1, -1 });
+	symbolList.push_back({ production_left, ret, -1, -1 });
 	return 1;
 #if 0
 	int res = 1;
@@ -1142,7 +1207,7 @@ int SemanticAnalysis::TranslateIfStmt_m2(const string production_left, const vec
 	backpatchingList.push_back(quaternionList.size() - 1);
 
 
-	quaternionList.push_back({ nextQuaternionIndex++, "j=", "-", "-", to_string(nextQuaternionIndex) });
+	//quaternionList.push_back({ nextQuaternionIndex++, "j", "-", "-", to_string(nextQuaternionIndex) });
 
 	// 修改symbol list
 	symbolList.push_back({ production_left, to_string(nextQuaternionIndex), -1, -1 });
@@ -1287,10 +1352,11 @@ int SemanticAnalysis::TranslateLoopStmt(const string production_left, const vect
 
 	// 无条件跳转到 Loop 的条件判断语句处
 	quaternionList.push_back({ nextQuaternionIndex++, "j", "-", "-", loopstmt_m.value });
-
+	string ret;
 	// 回填break
 	while (breakList.size() > 0)
 	{
+		ret =quaternionList[breakList.back()].result;
 		quaternionList[breakList.back()].result = to_string(nextQuaternionIndex);
 		breakList.pop_back();
 	}
@@ -1306,7 +1372,7 @@ int SemanticAnalysis::TranslateLoopStmt(const string production_left, const vect
 
 	PopSymbolList(production_right.size());
 
-	symbolList.push_back({ production_left, "", -1, -1 });
+	symbolList.push_back({ production_left, ret, -1, -1 });
 	return 1;
 }
 
@@ -1503,9 +1569,10 @@ int SemanticAnalysis::TranslateElement(const string production_left, const vecto
     }
     // Element -> Assignable
     else if (rightSize == 1 && production_right[0] == "Assignable") {
-        SemanticSymbol assignable = symbolList.back();
+        SemanticSymbol assignable = symbolList.back();/*
         PopSymbolList(1);
-        symbolList.emplace_back(production_left, assignable.value, assignable.tableIndex, assignable.symbolIndex);
+        symbolList.emplace_back(production_left, assignable.value, assignable.tableIndex, assignable.symbolIndex);*/
+		symbolList.back().dataType = production_left;
     }
     
     return res;
@@ -1522,6 +1589,7 @@ int SemanticAnalysis::TranslateMulDivExp(const string production_left, const vec
 		SemanticSymbol item = symbolList.back();
 		PopSymbolList(1);
 		symbolList.emplace_back(production_left, item.value, item.tableIndex, item.symbolIndex);
+		symbolList.back().ext = item.ext;  // 继承Item的ext属性
 	}
 	// MulDivExp -> MulDivExp MulDivOp Item
 	else if (production_right.size() == 3) {
@@ -1620,27 +1688,71 @@ int SemanticAnalysis::TranslateAssignStmt(const string production_left, const ve
 
 	// 检查左值是否已定义
 	int tbIndex, tbIndexIndex;
-	if (!CheckIdDefine(assignable, &tbIndex, &tbIndexIndex)) {
-		res = ProcessError(assignable, nullptr, nullptr, UNDEFINED_IDENTIFIER, pos);
+
+	//SemanticSymbolTable& function_table = symbolTables[scopeStack.back()];
+	//int table_position = symbolTables[0].FindSymbol(function_table.tableName);
+	string arraytype;
+	int symbol_position = symbolTables[0].FindSymbol(assignable.ext1);
+	if (symbol_position >= 0)
+	{
+		arraytype = symbolTables[0].symbols[symbol_position].specifierType;
 	}
-	else {
-		// 检查是否为不可变变量
-		//IdentifierInfo& varInfo = symbolTables[tbIndex].symbols[tbIndexIndex];
-		//if (varInfo.specifierType == "immut") {
-		//	// 不可变变量不能被赋值
-		//	res = ProcessError(assignable, nullptr, nullptr, SEMANTIC_ERROR_REDEFINED, pos);
-		//}
-		//else {
-			// 生成赋值四元式
-		//symbolTables[scopeStack.back()].symbols[pos].Variable=exp.value;
-		//变量的值没有修改
-			quaternionList.emplace_back(nextQuaternionIndex++,
-				"=",
-				exp.value,
-				"-",
-				assignable.value);
-		//}
+	
+	
+	if (arraytype != "array")
+	{
+		if (!CheckIdDefine(assignable, &tbIndex, &tbIndexIndex)) {
+			res = ProcessError(assignable, nullptr, nullptr, UNDEFINED_IDENTIFIER, pos);
+		}
+		else {
+			// 检查是否为不可变变量
+			//IdentifierInfo& varInfo = symbolTables[tbIndex].symbols[tbIndexIndex];
+			//if (varInfo.specifierType == "immut") {
+			//	// 不可变变量不能被赋值
+			//	res = ProcessError(assignable, nullptr, nullptr, SEMANTIC_ERROR_REDEFINED, pos);
+			//}
+			//else {
+				// 生成赋值四元式
+			//symbolTables[scopeStack.back()].symbols[pos].Variable=exp.value;
+			//变量的值没有修改
+			if (exp.value != "array")
+			{
+				if (assignable.ext == "")
+				{
+					quaternionList.emplace_back(nextQuaternionIndex++, "=", exp.value, "-", assignable.value);
+				}
+				else
+				{
+					quaternionList.emplace_back(nextQuaternionIndex++, "=", exp.value, assignable.ext, assignable.value);
+				}
+			}
+			else
+			{
+				while (arrayInitList.size() > 0)
+				{
+					quaternionList[arrayInitList.back()].result = assignable.value;
+					arrayInitList.pop_back();
+				}
+
+			}
+
+			//}
+		}
 	}
+	else
+	{
+		if (assignable.ext == "")
+		{
+			quaternionList.emplace_back(nextQuaternionIndex++, "=", exp.value, "-", assignable.value);
+		}
+		else
+		{
+			quaternionList.pop_back();
+			nextQuaternionIndex--;
+			quaternionList.emplace_back(nextQuaternionIndex++, "=", exp.value, assignable.ext, assignable.ext1);
+		}
+	}
+	
 
 	// 弹出所有相关符号并压入新符号
 	PopSymbolList(production_right.size());
@@ -1665,15 +1777,26 @@ int SemanticAnalysis::TranslateType(const string production_left, const vector<s
     else if (production_right.size() == 5 && production_right[0] == "[") {
         SemanticSymbol elementType = symbolList[symbolList.size() - 4];
         SemanticSymbol size = symbolList[symbolList.size() - 2];
-        typeStr = "[" + elementType.value + ";" + size.value + "]";
+		typeStr = "array";
+		quaternionList.emplace_back(nextQuaternionIndex++, "array_decl", elementType.value, size.value, "");
+		array_def_pos = nextQuaternionIndex - 2;
         PopSymbolList(5);
     }
     
     // Type -> ( TupleTypeInner )
     else if (production_right.size() == 3 && production_right[0] == "(") {
-        SemanticSymbol tupleInner = symbolList[symbolList.size() - 2];
+        /*emanticSymbol tupleInner = symbolList[symbolList.size() - 2];
         typeStr = "(" + tupleInner.value + ")";
-        PopSymbolList(3);
+        PopSymbolList(3);*/
+
+		//ret=  
+		//SemanticSymbol elementType = symbolList[symbolList.size() - 4];
+		SemanticSymbol ret = symbolList[symbolList.size() - 2];
+		typeStr = "tuple";
+		quaternionList.emplace_back(nextQuaternionIndex++, "tuple_decl", ret.ext, ret.value, "");
+		tuple_def_pos = nextQuaternionIndex - 2;
+		PopSymbolList(3);
+
     }
     
     // Type -> & mut Type
@@ -1729,6 +1852,13 @@ int SemanticAnalysis::TranslateParam(const string production_left, const vector<
 
 	quaternionList.emplace_back(nextQuaternionIndex++, "defpar", "-", "-", name.value);
 
+	if (array_def_pos != -1)
+	{
+		quaternionList[array_def_pos].result = name.value;
+		array_def_pos = -1;
+	}
+
+
 	PopSymbolList(production_right.size());
 	symbolList.emplace_back(production_left, name.value, scopeStack.back(), new_position);
 	return res;
@@ -1755,17 +1885,22 @@ int SemanticAnalysis::TranslateAssignable(const string production_left, const ve
     else if (production_right.size() == 4 && production_right[1] == "[") {
         SemanticSymbol array = symbolList[symbolList.size() - 4];
         SemanticSymbol index = symbolList[symbolList.size() - 2];
-        
+		quaternionList.pop_back();
+		nextQuaternionIndex--;
+		quaternionList.pop_back();
+		nextQuaternionIndex--;
         // 生成数组访问的临时变量
         string tempVar = "T" + to_string(tempVarCounter++);
         quaternionList.emplace_back(nextQuaternionIndex++, 
                                   "array_access", 
-                                  array.value, 
+                                  array.ext, 
                                   index.value, 
                                   tempVar);
-        
+
         PopSymbolList(4);
         symbolList.emplace_back(production_left, tempVar, -1, -1);
+		symbolList.back().ext = index.value;
+		symbolList.back().ext1 = array.ext;
     }
     
     // Assignable -> Factor <INT>
@@ -1814,6 +1949,14 @@ int SemanticAnalysis::TranslateAssignable(const string production_left, const ve
         PopSymbolList(2);
         symbolList.emplace_back(production_left, tempVar, -1, -1);
     }
+	else
+	{
+		SemanticSymbol stmt = symbolList[symbolList.size() - 4];
+		SemanticSymbol ret = symbolList[symbolList.size() - 2];
+		quaternionList.back().operand2 = ret.value;
+		PopSymbolList(2);
+		symbolList.emplace_back(production_left, stmt.ext, -1, -1);
+	}
     
     return res;
 }
@@ -1899,4 +2042,140 @@ int SemanticAnalysis::TranslateArgList(const string production_left, const vecto
 	symbolList.emplace_back(production_left, to_string(argCount), -1, -1);
 
 	return res;
+}
+
+int SemanticAnalysis::TranslateFuncExpStmtBlock(const string production_left, const vector<string> production_right, int pos)
+{
+	// 根据比较运算符类型设置操作码
+	SemanticSymbol ret = symbolList[symbolList.size() - 2]; // 函数返回值
+
+	// 更新符号流
+	PopSymbolList(production_right.size()); // 弹出所有相关符号
+	symbolList.emplace_back(production_left, ret.value, -1, -1);
+	
+	return 1;
+}
+int SemanticAnalysis::TranslateFuncExpStmtSeq(const string production_left, const vector<string> production_right, int pos)
+{
+	// 根据比较运算符类型设置操作码
+	SemanticSymbol ret = symbolList[symbolList.size() - 1]; // 函数返回值
+
+	// 更新符号流
+	PopSymbolList(production_right.size()); // 弹出所有相关符号
+	symbolList.emplace_back(production_left, ret.value, -1, -1);
+	
+	return 1;
+}
+
+int SemanticAnalysis::TranslateStmt(const string production_left, const vector<string> production_right, int pos)
+{
+	// 根据比较运算符类型设置操作码
+	SemanticSymbol ret = symbolList[symbolList.size() - 1]; // 函数返回值
+	SemanticSymbol ret1 = symbolList[symbolList.size() - 1]; // 函数返回值
+	if(production_right.size() == 1 )
+	{
+
+		if(production_right[0] == ";")
+			ret.value = "";
+		else if(production_right[0] == "Exp" && ret.value!="")
+
+
+		{
+			// ret = symbolList[symbolList.size() - 2];
+
+			string var = "T" + to_string(tempVarCounter);
+			int lable_num_next = nextQuaternionIndex++;
+
+			quaternionList.emplace_back(lable_num_next, "=", ret.value, "-", var);
+			ret.value = var;
+
+			//quaternionList.push_back({ nextQuaternionIndex++, "j", "-", "-", var });
+			//backpatchingList.push_back(quaternionList.size() - 1);
+			expList.push_back(quaternionList.size() - 1);
+		}
+		else
+			ret = symbolList[symbolList.size() - 1];
+	}
+	else if(production_right.size() == 2 )
+	{
+		ret = symbolList[symbolList.size() - 2];
+	}
+	else if(production_right.size() == 3)
+	{
+		ret = symbolList[symbolList.size() - 2];
+
+		string var = "T" + to_string(tempVarCounter++);
+		int lable_num_next = nextQuaternionIndex++;
+
+		quaternionList.emplace_back(lable_num_next, "=", ret.value, "-", var);
+		ret.value = var;
+
+		quaternionList.push_back({ nextQuaternionIndex++, "j", "-", "-", var });
+		//backpatchingList.push_back(quaternionList.size() - 1);
+		breakList.push_back(quaternionList.size() - 1);
+
+
+	}
+
+
+	// 更新符号流
+	PopSymbolList(production_right.size()); // 弹出所有相关符号
+	symbolList.emplace_back(production_left, ret.value, -1, -1);
+	symbolList.back().ext = ret1.value; // 继承上一个符号的ext属性
+	
+	return 1;
+}
+;
+int SemanticAnalysis::TranslateArrayElement(const string production_left, const vector<string> production_right, int pos)
+{
+	// 根据比较运算符类型设置操作码
+	SemanticSymbol ret = symbolList[symbolList.size() - 1]; // 函数返回值
+
+	// 更新符号流
+	PopSymbolList(production_right.size()); // 弹出所有相关符号
+	symbolList.emplace_back(production_left, ret.value, -1, -1);
+
+	if (array_index == -1)
+	{
+		array_index = 0;
+	}
+	else
+	{
+		array_index++;
+	}
+	
+	quaternionList.emplace_back(nextQuaternionIndex++, "=", to_string(array_index), ret.value, "");
+	arrayInitList.push_back(quaternionList.size() - 1);
+
+	return 1;
+}
+
+
+int SemanticAnalysis::TranslateArrayElementList(const string production_left, const vector<string> production_right, int pos)
+{
+	// 根据比较运算符类型设置操作码
+	SemanticSymbol ret = symbolList[symbolList.size() - 1]; // 函数返回值
+	
+	// 更新符号流
+	PopSymbolList(production_right.size()); // 弹出所有相关符号
+	symbolList.emplace_back(production_left, ret.value, -1, -1);
+
+
+	if (production_right[0]=="Exp")
+	{
+		if (array_index == -1)
+		{
+			array_index = 0;
+		}
+		else
+		{
+			array_index++;
+		}
+
+		quaternionList.emplace_back(nextQuaternionIndex++, "=", to_string(array_index), ret.value, "");
+		arrayInitList.push_back(quaternionList.size() - 1);
+	}
+	
+
+	return 1;
 }

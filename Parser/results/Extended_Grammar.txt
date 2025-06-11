@@ -1,7 +1,7 @@
 @ 终结符
 fn let mut return if else while for in loop break continue = + - * / == != < > <= >= . ( ) { } [ ] ; , : -> .. <ID> i32 <NUM> <INT> & # 
 非终结符
-S  Program  DeclList  Type  TupleTypeInner  Assignable  Element  Exp  Factor  Decl  FunDef  VarDecl  VarDeclAssign  FunHead  Block  ParamList  Param  VarMut  StmtList  Stmt  AssignStmt  ReturnStmt  IfStmt  WhileStmt  ForStmt  LoopStmt  BreakStmt  ContinueStmt  VarDeclInner  abc  AddSubExp  CompOp  FuncExpStmtBlock  SelectExp  AddSubOp  MulDivExp  MulDivOp  Item  ArrayElementList  TupleAssignInner  ArgList  ArrayElement  IfStmt_m1  IfStmt_m2  IfNext  IfStmt_next  WhileStmt_m1  WhileStmt_m2  ForStmt_m1  ForStmt_m2  LoopStmt_m  FuncExpStmtSeq  Param,  TypeList  TupleElementList  
+S  Program  DeclList  Type  TupleTypeInner  Assignable  Exp  Factor  Decl  FunDef  VarDecl  VarDeclAssign  FunHead  Block  ParamList  Param  VarMut  StmtList  Stmt  AssignStmt  ReturnStmt  IfStmt  WhileStmt  ForStmt  LoopStmt  BreakStmt  ContinueStmt  ArrayElementList  VarDeclInner  abc  AddSubExp  CompOp  FuncExpStmtBlock  SelectExp  AddSubOp  MulDivExp  MulDivOp  Item  Element  TupleAssignInner  ArgList  ArrayElement  IfStmt_m1  IfStmt_m2  IfNext  IfStmt_next  WhileStmt_m1  WhileStmt_m2  ForStmt_m1  ForStmt_m2  LoopStmt_m  FuncExpStmtSeq  Param,  TypeList  TupleElementList  
 语法规则
 production0  S  --->  Program 
 production1  Program  --->  DeclList 
@@ -10,8 +10,8 @@ production3  Type  --->  [ Type ; <INT> ]
 production4  Type  --->  ( TupleTypeInner ) 
 production5  Type  --->  & mut Type 
 production6  Type  --->  & Type 
-production7  Assignable  --->  <ID> 
-production8  Assignable  --->  Element [ Exp ] 
+production7  Assignable  --->  <ID> [ Exp ] 
+production8  Assignable  --->  <ID> 
 production9  Assignable  --->  Factor <INT> 
 production10  Assignable  --->  Factor . <INT> 
 production11  Assignable  --->  * Factor 
@@ -38,99 +38,102 @@ production31  Stmt  --->  VarDecl
 production32  Stmt  --->  VarDeclAssign 
 production33  Stmt  --->  ReturnStmt 
 production34  Stmt  --->  Exp ; 
-production35  Stmt  --->  IfStmt 
-production36  Stmt  --->  WhileStmt 
-production37  Stmt  --->  ForStmt 
-production38  Stmt  --->  LoopStmt 
-production39  Stmt  --->  BreakStmt 
-production40  Stmt  --->  ContinueStmt 
-production41  Stmt  --->  break Exp ; 
-production42  AssignStmt  --->  Assignable = Exp ; 
-production43  VarDeclAssign  --->  let VarDeclInner : Type = Exp ; 
-production44  VarDeclAssign  --->  let VarDeclInner = Exp ; 
-production45  VarDeclAssign  --->  VarDeclInner in Exp 
-production46  VarDeclAssign  --->  abc 
-production47  VarDecl  --->  let VarDeclInner ; 
-production48  VarDecl  --->  let VarDeclInner : Type ; 
-production49  VarDeclInner  --->  mut <ID> 
-production50  VarDeclInner  --->  <ID> 
-production51  ReturnStmt  --->  return ; 
-production52  ReturnStmt  --->  return Exp ; 
-production53  Exp  --->  AddSubExp 
-production54  Exp  --->  Exp CompOp Exp 
-production55  Exp  --->  Block 
-production56  Exp  --->  IfStmt 
-production57  Exp  --->  LoopStmt 
-production58  Exp  --->  FuncExpStmtBlock 
-production59  Exp  --->  SelectExp 
-production60  AddSubExp  --->  AddSubExp AddSubOp MulDivExp 
-production61  AddSubExp  --->  MulDivExp 
-production62  MulDivExp  --->  MulDivExp MulDivOp Item 
-production63  MulDivExp  --->  Item 
-production64  Item  --->  Factor 
-production65  Factor  --->  Element 
-production66  Factor  --->  * Factor 
-production67  Factor  --->  & mut Factor 
-production68  Factor  --->  & Factor 
-production69  Factor  --->  [ ArrayElementList ] 
-production70  Factor  --->  ( TupleAssignInner ) 
-production71  Element  --->  <INT> 
-production72  Element  --->  Assignable 
-production73  Element  --->  ( Exp ) 
-production74  Element  --->  <ID> ( ArgList ) 
-production75  Element  --->  <ID> 
-production76  ArrayElementList  --->  @ 
-production77  ArrayElementList  --->  Exp 
-production78  ArrayElementList  --->  ArrayElement , ArrayElementList 
-production79  ArrayElement  --->  Exp 
-production80  CompOp  --->  < 
-production81  CompOp  --->  <= 
-production82  CompOp  --->  > 
-production83  CompOp  --->  >= 
-production84  CompOp  --->  == 
-production85  CompOp  --->  != 
-production86  AddSubOp  --->  + 
-production87  AddSubOp  --->  - 
-production88  MulDivOp  --->  * 
-production89  MulDivOp  --->  / 
-production90  ArgList  --->  @ 
-production91  ArgList  --->  Exp 
-production92  ArgList  --->  Exp , ArgList 
-production93  IfStmt  --->  if IfStmt_m1 Exp IfStmt_m2 Block IfNext 
-production94  IfStmt_m1  --->  @ 
-production95  IfStmt_m2  --->  @ 
-production96  IfNext  --->  @ 
-production97  IfNext  --->  IfStmt_next else Block 
-production98  IfNext  --->  IfStmt_next else if IfStmt_m1 Exp IfStmt_m2 Block IfNext 
-production99  IfStmt_next  --->  @ 
-production100  WhileStmt  --->  while WhileStmt_m1 Exp WhileStmt_m2 Block 
-production101  WhileStmt_m1  --->  @ 
-production102  WhileStmt_m2  --->  @ 
-production103  ForStmt  --->  for ForStmt_m1 VarDeclAssign .. Exp ForStmt_m2 Block 
-production104  ForStmt_m1  --->  @ 
-production105  ForStmt_m2  --->  @ 
-production106  LoopStmt  --->  loop LoopStmt_m Block 
-production107  LoopStmt_m  --->  @ 
-production108  BreakStmt  --->  break ; 
-production109  ContinueStmt  --->  continue ; 
-production110  FuncExpStmtBlock  --->  { FuncExpStmtSeq } 
-production111  FuncExpStmtSeq  --->  Exp 
-production112  FuncExpStmtSeq  --->  Stmt FuncExpStmtSeq 
-production113  FunDef  --->  FunHead FuncExpStmtBlock 
-production114  FunHead  --->  fn <ID> ( ParamList ) 
-production115  FunHead  --->  fn <ID> ( ParamList ) -> Type 
-production116  ParamList  --->  @ 
-production117  ParamList  --->  Param 
-production118  ParamList  --->  Param, ParamList 
-production119  Param  --->  VarMut <ID> : Type 
-production120  SelectExp  --->  if Exp FuncExpStmtBlock else FuncExpStmtBlock 
-production121  TupleTypeInner  --->  @ 
-production122  TupleTypeInner  --->  Type , TypeList 
-production123  TypeList  --->  @ 
-production124  TypeList  --->  Type 
-production125  TypeList  --->  Type , TypeList 
-production126  TupleAssignInner  --->  @ 
-production127  TupleAssignInner  --->  Exp , TupleElementList 
-production128  TupleElementList  --->  @ 
-production129  TupleElementList  --->  Exp 
-production130  TupleElementList  --->  Exp , TupleElementList 
+production35  Stmt  --->  Exp 
+production36  Stmt  --->  IfStmt 
+production37  Stmt  --->  WhileStmt 
+production38  Stmt  --->  ForStmt 
+production39  Stmt  --->  LoopStmt 
+production40  Stmt  --->  BreakStmt 
+production41  Stmt  --->  ContinueStmt 
+production42  Stmt  --->  break Exp ; 
+production43  AssignStmt  --->  Assignable = Exp ; 
+production44  Assignable  --->  Stmt [ ArrayElementList ] 
+production45  VarDeclAssign  --->  let VarDeclInner : Type = Exp ; 
+production46  VarDeclAssign  --->  let VarDeclInner = Exp ; 
+production47  VarDeclAssign  --->  VarDeclInner in Exp 
+production48  VarDeclAssign  --->  abc 
+production49  VarDecl  --->  let VarDeclInner ; 
+production50  VarDecl  --->  let VarDeclInner : Type ; 
+production51  VarDeclInner  --->  mut <ID> 
+production52  VarDeclInner  --->  <ID> 
+production53  ReturnStmt  --->  return ; 
+production54  ReturnStmt  --->  return Exp ; 
+production55  Exp  --->  AddSubExp 
+production56  Exp  --->  Exp CompOp Exp 
+production57  Exp  --->  Block 
+production58  Exp  --->  IfStmt 
+production59  Exp  --->  LoopStmt 
+production60  Exp  --->  FuncExpStmtBlock 
+production61  Exp  --->  SelectExp 
+production62  AddSubExp  --->  AddSubExp AddSubOp MulDivExp 
+production63  AddSubExp  --->  MulDivExp 
+production64  MulDivExp  --->  MulDivExp MulDivOp Item 
+production65  MulDivExp  --->  Item 
+production66  Item  --->  Factor 
+production67  Factor  --->  Element 
+production68  Factor  --->  * Factor 
+production69  Factor  --->  & mut Factor 
+production70  Factor  --->  & Factor 
+production71  Factor  --->  [ ArrayElementList ] 
+production72  Factor  --->  ( TupleAssignInner ) 
+production73  Element  --->  <INT> 
+production74  Element  --->  Assignable 
+production75  Element  --->  ( Exp ) 
+production76  Element  --->  <ID> ( ArgList ) 
+production77  Element  --->  <ID> 
+production78  ArrayElementList  --->  @ 
+production79  ArrayElementList  --->  Exp 
+production80  ArrayElementList  --->  ArrayElement , ArrayElementList 
+production81  ArrayElementList  --->  ArrayElement 
+production82  ArrayElement  --->  Exp 
+production83  CompOp  --->  < 
+production84  CompOp  --->  <= 
+production85  CompOp  --->  > 
+production86  CompOp  --->  >= 
+production87  CompOp  --->  == 
+production88  CompOp  --->  != 
+production89  AddSubOp  --->  + 
+production90  AddSubOp  --->  - 
+production91  MulDivOp  --->  * 
+production92  MulDivOp  --->  / 
+production93  ArgList  --->  @ 
+production94  ArgList  --->  Exp 
+production95  ArgList  --->  Exp , ArgList 
+production96  IfStmt  --->  if IfStmt_m1 Exp IfStmt_m2 Block IfNext 
+production97  IfStmt_m1  --->  @ 
+production98  IfStmt_m2  --->  @ 
+production99  IfNext  --->  @ 
+production100  IfNext  --->  IfStmt_next else Block 
+production101  IfNext  --->  IfStmt_next else if IfStmt_m1 Exp IfStmt_m2 Block IfNext 
+production102  IfStmt_next  --->  @ 
+production103  WhileStmt  --->  while WhileStmt_m1 Exp WhileStmt_m2 Block 
+production104  WhileStmt_m1  --->  @ 
+production105  WhileStmt_m2  --->  @ 
+production106  ForStmt  --->  for ForStmt_m1 VarDeclAssign .. Exp ForStmt_m2 Block 
+production107  ForStmt_m1  --->  @ 
+production108  ForStmt_m2  --->  @ 
+production109  LoopStmt  --->  loop LoopStmt_m Block 
+production110  LoopStmt_m  --->  @ 
+production111  BreakStmt  --->  break ; 
+production112  ContinueStmt  --->  continue ; 
+production113  FuncExpStmtBlock  --->  { FuncExpStmtSeq } 
+production114  FuncExpStmtSeq  --->  Exp 
+production115  FuncExpStmtSeq  --->  Stmt FuncExpStmtSeq 
+production116  FunDef  --->  FunHead FuncExpStmtBlock 
+production117  FunHead  --->  fn <ID> ( ParamList ) 
+production118  FunHead  --->  fn <ID> ( ParamList ) -> Type 
+production119  ParamList  --->  @ 
+production120  ParamList  --->  Param 
+production121  ParamList  --->  Param, ParamList 
+production122  Param  --->  VarMut <ID> : Type 
+production123  SelectExp  --->  if Exp FuncExpStmtBlock else FuncExpStmtBlock 
+production124  TupleTypeInner  --->  @ 
+production125  TupleTypeInner  --->  Type , TypeList 
+production126  TypeList  --->  @ 
+production127  TypeList  --->  Type 
+production128  TypeList  --->  Type , TypeList 
+production129  TupleAssignInner  --->  @ 
+production130  TupleAssignInner  --->  Exp , TupleElementList 
+production131  TupleElementList  --->  @ 
+production132  TupleElementList  --->  Exp 
+production133  TupleElementList  --->  Exp , TupleElementList 

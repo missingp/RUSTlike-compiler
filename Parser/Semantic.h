@@ -36,6 +36,7 @@ struct SemanticSymbol
 	int tableIndex;	 // 符号所在的符号表在所有表中的索引位置。
 	int symbolIndex; // 符号在其所属符号表内的索引位置。
 	string ext;
+	string ext1;
 	SemanticSymbol(string d, string v, int t, int s) {
 		dataType = d;
 		value = v;
@@ -135,6 +136,13 @@ public:
 	int mainFunctionIndex;			   // main函数对应的四元式标号
 	int backpatchingLevel;			   // 回填层次
 
+	int array_index = -1;
+	int array_def_pos = -1;
+	int tuple_def_pos = -1;
+	int touple_index = -1;
+	vector<int> arrayInitList;
+	vector<int> tupleInitList;
+	vector<int> expList;
 	vector<int> breakList;
 	vector<int> continueList;
 	vector<int> backpatchingList; // 待回填的四元式在四元式表quaternion_list中的序号
@@ -212,4 +220,11 @@ private:
 	int TranslateForStmt(const string production_left, const vector<string> production_right, int pos);
 	int TranslateForStmt_m1(const string production_left, const vector<string> production_right, int pos);
 	int TranslateForStmt_m2(const string production_left, const vector<string> production_right, int pos);
+	int TranslateFuncExpStmtBlock(const string production_left, const vector<string> production_right, int pos);
+	int TranslateFuncExpStmtSeq(const string production_left, const vector<string> production_right, int pos);
+	int TranslateStmt(const string production_left, const vector<string> production_right, int pos);
+	int TranslateVarDecl(const string production_left, const vector<string> production_right, int pos);
+	int TranslateArrayElement(const string production_left, const vector<string> production_right, int pos);
+	int TranslateArrayElementList(const string production_left, const vector<string> production_right, int pos);
+	
 };

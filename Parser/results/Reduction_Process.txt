@@ -1,219 +1,499 @@
 STEP: 0
 STATUS_STACK:  0
 SYMBOL_STACK: #
-INPUT: fnmain(){letmuta=loop{break1;};}#
+INPUT: fnmain(muta:[i32;3]){letmutb:i32=a[0];a[0]=1;}#
 
 STEP: 1
 STATUS_STACK:  0 11
 STATUS_SYMBOL: #fn
-INPUT: <ID>(){letmut<ID>=loop{break<INT>;};}#
+INPUT: <ID>(mut<ID>:[i32;<INT>]){letmut<ID>:i32=<ID>[<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 2
 STATUS_STACK:  0 11 22
 STATUS_SYMBOL: #fn<ID>
-INPUT: (){letmut<ID>=loop{break<INT>;};}#
+INPUT: (mut<ID>:[i32;<INT>]){letmut<ID>:i32=<ID>[<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 3
-STATUS_STACK:  0 11 22 90
+STATUS_STACK:  0 11 22 108
 STATUS_SYMBOL: #fn<ID>(
-INPUT: ){letmut<ID>=loop{break<INT>;};}#
+INPUT: mut<ID>:[i32;<INT>]){letmut<ID>:i32=<ID>[<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 4
-STATUS_STACK:  0 11 22 90 257
-STATUS_SYMBOL: #fn<ID>(ParamList
-INPUT: ){letmut<ID>=loop{break<INT>;};}#
+STATUS_STACK:  0 11 22 108 298
+STATUS_SYMBOL: #fn<ID>(mut
+INPUT: <ID>:[i32;<INT>]){letmut<ID>:i32=<ID>[<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 5
-STATUS_STACK:  0 11 22 90 257 483
-STATUS_SYMBOL: #fn<ID>(ParamList)
-INPUT: {letmut<ID>=loop{break<INT>;};}#
+STATUS_STACK:  0 11 22 108 297
+STATUS_SYMBOL: #fn<ID>(VarMut
+INPUT: <ID>:[i32;<INT>]){letmut<ID>:i32=<ID>[<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 6
-STATUS_STACK:  0 8
-STATUS_SYMBOL: #FunHead
-INPUT: {letmut<ID>=loop{break<INT>;};}#
+STATUS_STACK:  0 11 22 108 297 525
+STATUS_SYMBOL: #fn<ID>(VarMut<ID>
+INPUT: :[i32;<INT>]){letmut<ID>:i32=<ID>[<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 7
-STATUS_STACK:  0 8 20
-STATUS_SYMBOL: #FunHead{
-INPUT: letmut<ID>=loop{break<INT>;};}#
+STATUS_STACK:  0 11 22 108 297 525 734
+STATUS_SYMBOL: #fn<ID>(VarMut<ID>:
+INPUT: [i32;<INT>]){letmut<ID>:i32=<ID>[<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 8
-STATUS_STACK:  0 8 20 40
-STATUS_SYMBOL: #FunHead{let
-INPUT: mut<ID>=loop{break<INT>;};}#
+STATUS_STACK:  0 11 22 108 297 525 734 743
+STATUS_SYMBOL: #fn<ID>(VarMut<ID>:[
+INPUT: i32;<INT>]){letmut<ID>:i32=<ID>[<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 9
-STATUS_STACK:  0 8 20 40 15
-STATUS_SYMBOL: #FunHead{letmut
-INPUT: <ID>=loop{break<INT>;};}#
+STATUS_STACK:  0 11 22 108 297 525 734 743 303
+STATUS_SYMBOL: #fn<ID>(VarMut<ID>:[i32
+INPUT: ;<INT>]){letmut<ID>:i32=<ID>[<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 10
-STATUS_STACK:  0 8 20 40 15 27
-STATUS_SYMBOL: #FunHead{letmut<ID>
-INPUT: =loop{break<INT>;};}#
+STATUS_STACK:  0 11 22 108 297 525 734 743 890
+STATUS_SYMBOL: #fn<ID>(VarMut<ID>:[Type
+INPUT: ;<INT>]){letmut<ID>:i32=<ID>[<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 11
-STATUS_STACK:  0 8 20 40 129
-STATUS_SYMBOL: #FunHead{letVarDeclInner
-INPUT: =loop{break<INT>;};}#
+STATUS_STACK:  0 11 22 108 297 525 734 743 890 1008
+STATUS_SYMBOL: #fn<ID>(VarMut<ID>:[Type;
+INPUT: <INT>]){letmut<ID>:i32=<ID>[<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 12
-STATUS_STACK:  0 8 20 40 129 309
-STATUS_SYMBOL: #FunHead{letVarDeclInner=
-INPUT: loop{break<INT>;};}#
+STATUS_STACK:  0 11 22 108 297 525 734 743 890 1008 1104
+STATUS_SYMBOL: #fn<ID>(VarMut<ID>:[Type;<INT>
+INPUT: ]){letmut<ID>:i32=<ID>[<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 13
-STATUS_STACK:  0 8 20 40 129 309 100
-STATUS_SYMBOL: #FunHead{letVarDeclInner=loop
-INPUT: {break<INT>;};}#
+STATUS_STACK:  0 11 22 108 297 525 734 743 890 1008 1104 1167
+STATUS_SYMBOL: #fn<ID>(VarMut<ID>:[Type;<INT>]
+INPUT: ){letmut<ID>:i32=<ID>[<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 14
-STATUS_STACK:  0 8 20 40 129 309 100 280
-STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m
-INPUT: {break<INT>;};}#
+STATUS_STACK:  0 11 22 108 297 525 734 885
+STATUS_SYMBOL: #fn<ID>(VarMut<ID>:Type
+INPUT: ){letmut<ID>:i32=<ID>[<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 15
-STATUS_STACK:  0 8 20 40 129 309 100 280 503
-STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{
-INPUT: break<INT>;};}#
+STATUS_STACK:  0 11 22 108 295
+STATUS_SYMBOL: #fn<ID>(Param
+INPUT: ){letmut<ID>:i32=<ID>[<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 16
-STATUS_STACK:  0 8 20 40 129 309 100 280 503 45
-STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{break
-INPUT: <INT>;};}#
+STATUS_STACK:  0 11 22 108 294
+STATUS_SYMBOL: #fn<ID>(ParamList
+INPUT: ){letmut<ID>:i32=<ID>[<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 17
-STATUS_STACK:  0 8 20 40 129 309 100 280 503 45 114
-STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{break<INT>
-INPUT: ;};}#
+STATUS_STACK:  0 11 22 108 294 522
+STATUS_SYMBOL: #fn<ID>(ParamList)
+INPUT: {letmut<ID>:i32=<ID>[<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 18
-STATUS_STACK:  0 8 20 40 129 309 100 280 503 45 109
-STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{breakElement
-INPUT: ;};}#
+STATUS_STACK:  0 8
+STATUS_SYMBOL: #FunHead
+INPUT: {letmut<ID>:i32=<ID>[<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 19
-STATUS_STACK:  0 8 20 40 129 309 100 280 503 45 108
-STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{breakFactor
-INPUT: ;};}#
+STATUS_STACK:  0 8 20
+STATUS_SYMBOL: #FunHead{
+INPUT: letmut<ID>:i32=<ID>[<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 20
-STATUS_STACK:  0 8 20 40 129 309 100 280 503 45 107
-STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{breakItem
-INPUT: ;};}#
+STATUS_STACK:  0 8 20 41
+STATUS_SYMBOL: #FunHead{let
+INPUT: mut<ID>:i32=<ID>[<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 21
-STATUS_STACK:  0 8 20 40 129 309 100 280 503 45 104
-STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{breakMulDivExp
-INPUT: ;};}#
+STATUS_STACK:  0 8 20 41 15
+STATUS_SYMBOL: #FunHead{letmut
+INPUT: <ID>:i32=<ID>[<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 22
-STATUS_STACK:  0 8 20 40 129 309 100 280 503 45 99
-STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{breakAddSubExp
-INPUT: ;};}#
+STATUS_STACK:  0 8 20 41 15 27
+STATUS_SYMBOL: #FunHead{letmut<ID>
+INPUT: :i32=<ID>[<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 23
-STATUS_STACK:  0 8 20 40 129 309 100 280 503 45 132
-STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{breakExp
-INPUT: ;};}#
+STATUS_STACK:  0 8 20 41 149
+STATUS_SYMBOL: #FunHead{letVarDeclInner
+INPUT: :i32=<ID>[<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 24
-STATUS_STACK:  0 8 20 40 129 309 100 280 503 45 132 311
-STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{breakExp;
-INPUT: };}#
+STATUS_STACK:  0 8 20 41 149 347
+STATUS_SYMBOL: #FunHead{letVarDeclInner:
+INPUT: i32=<ID>[<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 25
-STATUS_STACK:  0 8 20 40 129 309 100 280 503 527
-STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{Stmt
-INPUT: };}#
+STATUS_STACK:  0 8 20 41 149 347 111
+STATUS_SYMBOL: #FunHead{letVarDeclInner:i32
+INPUT: =<ID>[<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 26
-STATUS_STACK:  0 8 20 40 129 309 100 280 503 527 118
-STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{StmtStmtList
-INPUT: };}#
+STATUS_STACK:  0 8 20 41 149 347 565
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type
+INPUT: =<ID>[<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 27
-STATUS_STACK:  0 8 20 40 129 309 100 280 503 282
-STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{StmtList
-INPUT: };}#
+STATUS_STACK:  0 8 20 41 149 347 565 761
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=
+INPUT: <ID>[<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 28
-STATUS_STACK:  0 8 20 40 129 309 100 280 503 282 505
-STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_m{StmtList}
-INPUT: ;}#
+STATUS_STACK:  0 8 20 41 149 347 565 761 134
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=<ID>
+INPUT: [<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 29
-STATUS_STACK:  0 8 20 40 129 309 100 280 502
-STATUS_SYMBOL: #FunHead{letVarDeclInner=loopLoopStmt_mBlock
-INPUT: ;}#
+STATUS_STACK:  0 8 20 41 149 347 565 761 133
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Assignable
+INPUT: [<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 30
-STATUS_STACK:  0 8 20 40 129 309 102
-STATUS_SYMBOL: #FunHead{letVarDeclInner=LoopStmt
-INPUT: ;}#
+STATUS_STACK:  0 8 20 41 149 347 565 761 127
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Element
+INPUT: [<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 31
-STATUS_STACK:  0 8 20 40 129 309 524
-STATUS_SYMBOL: #FunHead{letVarDeclInner=Exp
-INPUT: ;}#
+STATUS_STACK:  0 8 20 41 149 347 565 761 126
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Factor
+INPUT: [<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 32
-STATUS_STACK:  0 8 20 40 129 309 524 723
-STATUS_SYMBOL: #FunHead{letVarDeclInner=Exp;
-INPUT: }#
+STATUS_STACK:  0 8 20 41 149 347 565 761 125
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Item
+INPUT: [<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 33
-STATUS_STACK:  0 8 20 34
-STATUS_SYMBOL: #FunHead{VarDeclAssign
-INPUT: }#
+STATUS_STACK:  0 8 20 41 149 347 565 761 122
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=MulDivExp
+INPUT: [<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 34
-STATUS_STACK:  0 8 20 30
-STATUS_SYMBOL: #FunHead{Stmt
-INPUT: }#
+STATUS_STACK:  0 8 20 41 149 347 565 761 114
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=AddSubExp
+INPUT: [<INT>];<ID>[<INT>]=<INT>;}#
 
 STEP: 35
-STATUS_STACK:  0 8 20 30 118
+STATUS_STACK:  0 8 20 41 149 347 565 761 899
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Exp
+INPUT: [<INT>];<ID>[<INT>]=<INT>;}#
+
+STEP: 36
+STATUS_STACK:  0 8 20 41 149 347 565 761 135
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Stmt
+INPUT: [<INT>];<ID>[<INT>]=<INT>;}#
+
+STEP: 37
+STATUS_STACK:  0 8 20 41 149 347 565 761 135 341
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Stmt[
+INPUT: <INT>];<ID>[<INT>]=<INT>;}#
+
+STEP: 38
+STATUS_STACK:  0 8 20 41 149 347 565 761 135 341 229
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Stmt[<INT>
+INPUT: ];<ID>[<INT>]=<INT>;}#
+
+STEP: 39
+STATUS_STACK:  0 8 20 41 149 347 565 761 135 341 224
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Stmt[Element
+INPUT: ];<ID>[<INT>]=<INT>;}#
+
+STEP: 40
+STATUS_STACK:  0 8 20 41 149 347 565 761 135 341 223
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Stmt[Factor
+INPUT: ];<ID>[<INT>]=<INT>;}#
+
+STEP: 41
+STATUS_STACK:  0 8 20 41 149 347 565 761 135 341 222
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Stmt[Item
+INPUT: ];<ID>[<INT>]=<INT>;}#
+
+STEP: 42
+STATUS_STACK:  0 8 20 41 149 347 565 761 135 341 219
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Stmt[MulDivExp
+INPUT: ];<ID>[<INT>]=<INT>;}#
+
+STEP: 43
+STATUS_STACK:  0 8 20 41 149 347 565 761 135 341 210
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Stmt[AddSubExp
+INPUT: ];<ID>[<INT>]=<INT>;}#
+
+STEP: 44
+STATUS_STACK:  0 8 20 41 149 347 565 761 135 341 211
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Stmt[Exp
+INPUT: ];<ID>[<INT>]=<INT>;}#
+
+STEP: 45
+STATUS_STACK:  0 8 20 41 149 347 565 761 135 341 212
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Stmt[ArrayElement
+INPUT: ];<ID>[<INT>]=<INT>;}#
+
+STEP: 46
+STATUS_STACK:  0 8 20 41 149 347 565 761 135 341 563
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Stmt[ArrayElementList
+INPUT: ];<ID>[<INT>]=<INT>;}#
+
+STEP: 47
+STATUS_STACK:  0 8 20 41 149 347 565 761 135 341 563 759
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Stmt[ArrayElementList]
+INPUT: ;<ID>[<INT>]=<INT>;}#
+
+STEP: 48
+STATUS_STACK:  0 8 20 41 149 347 565 761 133
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Assignable
+INPUT: ;<ID>[<INT>]=<INT>;}#
+
+STEP: 49
+STATUS_STACK:  0 8 20 41 149 347 565 761 127
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Element
+INPUT: ;<ID>[<INT>]=<INT>;}#
+
+STEP: 50
+STATUS_STACK:  0 8 20 41 149 347 565 761 126
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Factor
+INPUT: ;<ID>[<INT>]=<INT>;}#
+
+STEP: 51
+STATUS_STACK:  0 8 20 41 149 347 565 761 125
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Item
+INPUT: ;<ID>[<INT>]=<INT>;}#
+
+STEP: 52
+STATUS_STACK:  0 8 20 41 149 347 565 761 122
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=MulDivExp
+INPUT: ;<ID>[<INT>]=<INT>;}#
+
+STEP: 53
+STATUS_STACK:  0 8 20 41 149 347 565 761 114
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=AddSubExp
+INPUT: ;<ID>[<INT>]=<INT>;}#
+
+STEP: 54
+STATUS_STACK:  0 8 20 41 149 347 565 761 899
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Exp
+INPUT: ;<ID>[<INT>]=<INT>;}#
+
+STEP: 55
+STATUS_STACK:  0 8 20 41 149 347 565 761 899 1014
+STATUS_SYMBOL: #FunHead{letVarDeclInner:Type=Exp;
+INPUT: <ID>[<INT>]=<INT>;}#
+
+STEP: 56
+STATUS_STACK:  0 8 20 29
+STATUS_SYMBOL: #FunHead{VarDeclAssign
+INPUT: <ID>[<INT>]=<INT>;}#
+
+STEP: 57
+STATUS_STACK:  0 8 20 33
+STATUS_SYMBOL: #FunHead{Stmt
+INPUT: <ID>[<INT>]=<INT>;}#
+
+STEP: 58
+STATUS_STACK:  0 8 20 33 60
+STATUS_SYMBOL: #FunHead{Stmt<ID>
+INPUT: [<INT>]=<INT>;}#
+
+STEP: 59
+STATUS_STACK:  0 8 20 33 51
+STATUS_SYMBOL: #FunHead{StmtAssignable
+INPUT: [<INT>]=<INT>;}#
+
+STEP: 60
+STATUS_STACK:  0 8 20 33 64
+STATUS_SYMBOL: #FunHead{StmtElement
+INPUT: [<INT>]=<INT>;}#
+
+STEP: 61
+STATUS_STACK:  0 8 20 33 61
+STATUS_SYMBOL: #FunHead{StmtFactor
+INPUT: [<INT>]=<INT>;}#
+
+STEP: 62
+STATUS_STACK:  0 8 20 33 63
+STATUS_SYMBOL: #FunHead{StmtItem
+INPUT: [<INT>]=<INT>;}#
+
+STEP: 63
+STATUS_STACK:  0 8 20 33 57
+STATUS_SYMBOL: #FunHead{StmtMulDivExp
+INPUT: [<INT>]=<INT>;}#
+
+STEP: 64
+STATUS_STACK:  0 8 20 33 46
+STATUS_SYMBOL: #FunHead{StmtAddSubExp
+INPUT: [<INT>]=<INT>;}#
+
+STEP: 65
+STATUS_STACK:  0 8 20 33 35
+STATUS_SYMBOL: #FunHead{StmtExp
+INPUT: [<INT>]=<INT>;}#
+
+STEP: 66
+STATUS_STACK:  0 8 20 33 33
+STATUS_SYMBOL: #FunHead{StmtStmt
+INPUT: [<INT>]=<INT>;}#
+
+STEP: 67
+STATUS_STACK:  0 8 20 33 33 140
+STATUS_SYMBOL: #FunHead{StmtStmt[
+INPUT: <INT>]=<INT>;}#
+
+STEP: 68
+STATUS_STACK:  0 8 20 33 33 140 229
+STATUS_SYMBOL: #FunHead{StmtStmt[<INT>
+INPUT: ]=<INT>;}#
+
+STEP: 69
+STATUS_STACK:  0 8 20 33 33 140 224
+STATUS_SYMBOL: #FunHead{StmtStmt[Element
+INPUT: ]=<INT>;}#
+
+STEP: 70
+STATUS_STACK:  0 8 20 33 33 140 223
+STATUS_SYMBOL: #FunHead{StmtStmt[Factor
+INPUT: ]=<INT>;}#
+
+STEP: 71
+STATUS_STACK:  0 8 20 33 33 140 222
+STATUS_SYMBOL: #FunHead{StmtStmt[Item
+INPUT: ]=<INT>;}#
+
+STEP: 72
+STATUS_STACK:  0 8 20 33 33 140 219
+STATUS_SYMBOL: #FunHead{StmtStmt[MulDivExp
+INPUT: ]=<INT>;}#
+
+STEP: 73
+STATUS_STACK:  0 8 20 33 33 140 210
+STATUS_SYMBOL: #FunHead{StmtStmt[AddSubExp
+INPUT: ]=<INT>;}#
+
+STEP: 74
+STATUS_STACK:  0 8 20 33 33 140 211
+STATUS_SYMBOL: #FunHead{StmtStmt[Exp
+INPUT: ]=<INT>;}#
+
+STEP: 75
+STATUS_STACK:  0 8 20 33 33 140 212
+STATUS_SYMBOL: #FunHead{StmtStmt[ArrayElement
+INPUT: ]=<INT>;}#
+
+STEP: 76
+STATUS_STACK:  0 8 20 33 33 140 342
+STATUS_SYMBOL: #FunHead{StmtStmt[ArrayElementList
+INPUT: ]=<INT>;}#
+
+STEP: 77
+STATUS_STACK:  0 8 20 33 33 140 342 564
+STATUS_SYMBOL: #FunHead{StmtStmt[ArrayElementList]
+INPUT: =<INT>;}#
+
+STEP: 78
+STATUS_STACK:  0 8 20 33 51
+STATUS_SYMBOL: #FunHead{StmtAssignable
+INPUT: =<INT>;}#
+
+STEP: 79
+STATUS_STACK:  0 8 20 33 51 157
+STATUS_SYMBOL: #FunHead{StmtAssignable=
+INPUT: <INT>;}#
+
+STEP: 80
+STATUS_STACK:  0 8 20 33 51 157 132
+STATUS_SYMBOL: #FunHead{StmtAssignable=<INT>
+INPUT: ;}#
+
+STEP: 81
+STATUS_STACK:  0 8 20 33 51 157 127
+STATUS_SYMBOL: #FunHead{StmtAssignable=Element
+INPUT: ;}#
+
+STEP: 82
+STATUS_STACK:  0 8 20 33 51 157 126
+STATUS_SYMBOL: #FunHead{StmtAssignable=Factor
+INPUT: ;}#
+
+STEP: 83
+STATUS_STACK:  0 8 20 33 51 157 125
+STATUS_SYMBOL: #FunHead{StmtAssignable=Item
+INPUT: ;}#
+
+STEP: 84
+STATUS_STACK:  0 8 20 33 51 157 122
+STATUS_SYMBOL: #FunHead{StmtAssignable=MulDivExp
+INPUT: ;}#
+
+STEP: 85
+STATUS_STACK:  0 8 20 33 51 157 114
+STATUS_SYMBOL: #FunHead{StmtAssignable=AddSubExp
+INPUT: ;}#
+
+STEP: 86
+STATUS_STACK:  0 8 20 33 51 157 354
+STATUS_SYMBOL: #FunHead{StmtAssignable=Exp
+INPUT: ;}#
+
+STEP: 87
+STATUS_STACK:  0 8 20 33 51 157 354 570
+STATUS_SYMBOL: #FunHead{StmtAssignable=Exp;
+INPUT: }#
+
+STEP: 88
+STATUS_STACK:  0 8 20 33 30
+STATUS_SYMBOL: #FunHead{StmtAssignStmt
+INPUT: }#
+
+STEP: 89
+STATUS_STACK:  0 8 20 33 33
+STATUS_SYMBOL: #FunHead{StmtStmt
+INPUT: }#
+
+STEP: 90
+STATUS_STACK:  0 8 20 33 33 138
+STATUS_SYMBOL: #FunHead{StmtStmtStmtList
+INPUT: }#
+
+STEP: 91
+STATUS_STACK:  0 8 20 33 138
 STATUS_SYMBOL: #FunHead{StmtStmtList
 INPUT: }#
 
-STEP: 36
+STEP: 92
 STATUS_STACK:  0 8 20 28
 STATUS_SYMBOL: #FunHead{StmtList
 INPUT: }#
 
-STEP: 37
-STATUS_STACK:  0 8 20 28 117
+STEP: 93
+STATUS_STACK:  0 8 20 28 136
 STATUS_SYMBOL: #FunHead{StmtList}
 INPUT: #
 
-STEP: 38
+STEP: 94
 STATUS_STACK:  0 8 18
 STATUS_SYMBOL: #FunHeadBlock
 INPUT: #
 
-STEP: 39
-STATUS_STACK:  0 4
+STEP: 95
+STATUS_STACK:  0 2
 STATUS_SYMBOL: #FunDef
 INPUT: #
 
-STEP: 40
-STATUS_STACK:  0 2
+STEP: 96
+STATUS_STACK:  0 6
 STATUS_SYMBOL: #Decl
 INPUT: #
 
-STEP: 41
-STATUS_STACK:  0 2 17
+STEP: 97
+STATUS_STACK:  0 6 17
 STATUS_SYMBOL: #DeclDeclList
 INPUT: #
 
-STEP: 42
+STEP: 98
 STATUS_STACK:  0 5
 STATUS_SYMBOL: #DeclList
 INPUT: #
 
-STEP: 43
+STEP: 99
 STATUS_STACK:  0 3
 STATUS_SYMBOL: #Program
 INPUT: #

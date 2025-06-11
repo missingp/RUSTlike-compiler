@@ -16,8 +16,7 @@ $ 类型和可赋值元素定义
 Type ::= i32 | [ Type ; <INT> ] | ( TupleTypeInner ) | & mut Type | & Type
 
 $ 无法识别.
-Assignable ::= <ID> [ Exp ] 
-Assignable ::= <ID> | Factor <INT>
+Assignable ::= <ID> | Element [ Exp ] | Factor <INT>
 Assignable ::= Factor . <INT>
 Assignable ::= * Factor
 $ 声明列表
@@ -46,7 +45,6 @@ Stmt ::= VarDecl
 Stmt ::= VarDeclAssign
 Stmt ::= ReturnStmt
 Stmt ::= Exp ;
-Stmt ::= Exp
 Stmt ::= IfStmt
 Stmt ::= WhileStmt
 Stmt ::= ForStmt
@@ -56,8 +54,6 @@ Stmt ::= ContinueStmt
 Stmt ::= break Exp ;
 $ 赋值语句
 AssignStmt ::= Assignable = Exp ;
-Assignable ::= Stmt [ ArrayElementList ]
-
 
 $ 变量声明赋值语句
 VarDeclAssign ::= let VarDeclInner : Type = Exp ;
@@ -81,7 +77,7 @@ MulDivExp ::= MulDivExp MulDivOp Item | Item
 Item ::= Factor
 Factor ::= Element | * Factor | & mut Factor | & Factor | [ ArrayElementList ] | ( TupleAssignInner )
 Element ::= <INT> | Assignable | ( Exp ) | <ID> ( ArgList ) | <ID>
-ArrayElementList ::= @ | Exp | ArrayElement , ArrayElementList | ArrayElement
+ArrayElementList ::= @ | Exp | ArrayElement , ArrayElementList
 ArrayElement ::= Exp
 
 $ 新增运算符规则
